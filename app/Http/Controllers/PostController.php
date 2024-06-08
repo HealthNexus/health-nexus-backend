@@ -59,14 +59,14 @@ class PostController extends Controller
             'excerpt'=>['string'],
             'body' => ['string'],
             'thumbnail'=>['image', 'max:2048']
-        ], 200);
+        ]);
 
         $post->update($attributes);
 
         return response([
             'post'=>$post,
             'message'=> 'post updated successfully'
-        ]);
+        ], 200);
     }
 
     /**
@@ -75,5 +75,8 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
+        return response([
+            'message'=>'post deleted successfully',
+        ], 204);
     }
 }
