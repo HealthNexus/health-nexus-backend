@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,4 +14,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/user', function(Request $request) {
         return response(['user'=>$request->user()], 200);
     });
+
+
+    //posts routes
+Route::post('/posts', [PostController::class, 'index']);
+Route::post('/post/{post}', [PostController::class, 'show']);
+Route::post('/post/create', [PostController::class, 'store']);
+Route::post('/posts/{post}/update', [PostController::class, 'update']);
+Route::post('/posts/{post}/destroy', [PostController::class, 'destroy']);
+
 });
