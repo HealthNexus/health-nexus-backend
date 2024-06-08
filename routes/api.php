@@ -17,10 +17,10 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
 
     //posts routes
-Route::post('/posts', [PostController::class, 'index']);
-Route::post('/post/{post}', [PostController::class, 'show']);
-Route::post('/post/create', [PostController::class, 'store']);
-Route::post('/posts/{post}/update', [PostController::class, 'update']);
-Route::post('/posts/{post}/destroy', [PostController::class, 'destroy']);
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::post('/posts/create', [PostController::class, 'store']);
+Route::put('/posts/{post}/update', [PostController::class, 'update']);
+Route::delete('/posts/{post}/destroy', [PostController::class, 'destroy']);
 
 });
