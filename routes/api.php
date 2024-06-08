@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/posts/{post}', [PostController::class, 'show']);
+
+//retrieve all posts
+Route::get('/posts', [PostController::class, 'index']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function() {
@@ -17,8 +21,6 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
 
     //posts routes
-Route::get('/posts', [PostController::class, 'index']);
-Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::post('/posts/create', [PostController::class, 'store']);
 Route::put('/posts/{post}/update', [PostController::class, 'update']);
 Route::delete('/posts/{post}/destroy', [PostController::class, 'destroy']);
