@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReplyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,16 +15,25 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::get('/posts', [PostController::class, 'index']);
 
 // Protected routes
-Route::group(['middleware' => ['auth:sanctum']], function() {
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    // create a new route for logout
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', function(Request $request) {
-        return response(['user'=>$request->user()], 200);
+
+    Route::get('/user', function (Request $request) {
+        return response(['user' => $request->user()], 200);
     });
 
 
     //posts routes
-Route::post('/posts/create', [PostController::class, 'store']);
-Route::put('/posts/{post}/update', [PostController::class, 'update']);
-Route::delete('/posts/{post}/destroy', [PostController::class, 'destroy']);
+    Route::post('/posts/create', [PostController::class, 'store']);
+    Route::put('/posts/{post}/update', [PostController::class, 'update']);
+    Route::delete('/posts/{post}/destroy', [PostController::class, 'destroy']);
 
+    //comments routes with comment controller
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
+    Route::delete('/comments/{comment}/destroy', [CommentController::class, 'destroy']);
+
+    //reply routes with reply controller
+    Route::post('/comments/{comment}/replies', [ReplyController::class, 'store']);
+    Route::delete('/replies/{reply}/destroy', [ReplyController::class, 'destroy']);
 });
