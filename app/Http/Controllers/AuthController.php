@@ -14,7 +14,7 @@ class AuthController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required', 'max:55'],
-            'email' => ['email','required','unique:users'],
+            'email' => ['email', 'required', 'unique:users'],
             'password' => ['confirmed', Rules\Password::defaults()],
             'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
         ]);
@@ -25,25 +25,32 @@ class AuthController extends Controller
 
         $token = $user->createToken('authToken');
 
-        return response(['user' => $user, 'access_token' => $token->plainTextToken], 200);
+        return response(
+            [
+                'user' => $user,
+                'access_token' => $token->plainTextToken,
+                'message' => 'Account created successfully',
+            ],
+            200
+        );
     }
 
     // Login
     public function login(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => ['email','required'],
+            'email' => ['email', 'required'],
             'password' => ['required', 'min:8'],
         ]);
 
-        if(!Auth::attempt($validatedData))
-        {
+        if (!Auth::attempt($validatedData)) {
             return response(['message' => 'Invalid credentials'], 401);
         }
         $user = Auth::user();
-        return response ([
+        return response([
             'user' => $user,
-            'token' => $user->createToken('authToken')->plainTextToken
+            'token' => $user->createToken('authToken')->plainTextToken,
+            'message' => 'Logged in successfully!',
         ], 200);
     }
 
@@ -51,6 +58,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        return response(['message' => 'Logged out'], 200);
+        return response(['message' => 'Logged out!'], 200);
     }
 }
