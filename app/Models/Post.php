@@ -22,9 +22,8 @@ class Post extends Model
                 $query->where(
                     fn ($query) =>
                     $query->where('title', 'LIKE', '%' . request('search') . '%')
-                        ->orWhere('keywords', 'LIKE', '%' . request('search') . '%')
-                        ->orWhere('description', 'LIKE', '%' . request('search') . '%')
-                        ->orWhere('location', 'LIKE', '%' . request('search') . '%')
+                        ->orWhere('excerpt', 'LIKE', '%' . request('search') . '%')
+                        ->orWhere('body', 'LIKE', '%' . request('search') . '%')
                 )
 
             );
@@ -38,18 +37,6 @@ class Post extends Model
                         'category',
                         fn ($query) =>
                         $query->where('slug', $category)
-                    )
-            );
-
-        $query
-            ->when(
-                $filters['campus'] ?? false,
-                fn ($query, $campus) =>
-                $query
-                    ->whereHas(
-                        'campus',
-                        fn ($query) =>
-                        $query->where('slug', $campus)
                     )
             );
 
