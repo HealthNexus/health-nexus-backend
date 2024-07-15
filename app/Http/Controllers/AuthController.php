@@ -53,6 +53,7 @@ class AuthController extends Controller
             'message' => 'Logged in successfully!',
         ], 200);
     }
+    
 
     // Logout
     public function logout(Request $request)
