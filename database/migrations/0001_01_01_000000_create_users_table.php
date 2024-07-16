@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('role')->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('hospital_id');
+            $table->foreignId('disease_id');
             $table->rememberToken();
             $table->timestamps();
         });
