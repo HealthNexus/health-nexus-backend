@@ -16,7 +16,7 @@ class AuthController extends Controller
             'name' => ['required', 'max:55'],
             'email' => ['email', 'required', 'unique:users'],
             'password' => ['confirmed', Rules\Password::defaults()],
-            'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
+            'avatar' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
         ]);
 
         $validatedData['password'] = bcrypt($request->password);
@@ -53,7 +53,7 @@ class AuthController extends Controller
             'message' => 'Logged in successfully!',
         ], 200);
     }
-    
+
 
     // Logout
     public function logout(Request $request)
