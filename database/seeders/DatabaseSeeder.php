@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hospital;
 use App\Models\Post;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -17,6 +18,8 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         Post::factory()->count(10)->create();
+
+        Hospital::factory()->count(10)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
