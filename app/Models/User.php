@@ -42,4 +42,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function hospital()
+    {
+        return $this->belongsTo(Hospital::class);
+    }
 }
