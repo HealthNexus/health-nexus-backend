@@ -21,9 +21,37 @@ class DatabaseSeeder extends Seeder
 
         Hospital::factory()->count(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->count(10)->create();
+
+        //create disease
+        $diseases = [
+            'Covid-19',
+            'Malaria',
+            'Typhoid',
+            'HIV/AIDS', '
+            Diabetes',
+            'Hypertension',
+            'Cancer',
+            'Tuberculosis',
+            'Cholera',
+            'Yellow Fever',
+            'Measles',
+            'Chicken Pox',
+            'Lassa Fever',
+            'Ebola',
+            'Influenza',
+            'Pneumonia',
+            'Meningitis',
+            'Hepatitis',
+            'Dysentery',
+            'Chronic Kidney Disease',
+            'Heart Disease',
+            'Stroke',
+            'Asthma',
+            'Arthritis',
+        ];
+        foreach ($diseases as $disease) {
+            \App\Models\Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
+        }
     }
 }
