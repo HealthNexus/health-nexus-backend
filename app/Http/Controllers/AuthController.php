@@ -16,7 +16,8 @@ class AuthController extends Controller
             'name' => ['required', 'max:55'],
             'email' => ['email', 'required', 'unique:users'],
             'password' => ['confirmed', Rules\Password::defaults()],
-            'avatar' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048']
+            'avatar' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'hospital_id' => ['required', ],
         ]);
 
         $validatedData['password'] = bcrypt($request->password);
