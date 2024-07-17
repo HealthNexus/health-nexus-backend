@@ -20,6 +20,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => fake()->unique()->sentence(),
+            'disease_id' => fake()->numberBetween(1, 10),
             'excerpt' => fake()->paragraph(1),
             'body' => fake()->paragraph(10),
             'thumbnail' => fake()->unique()->word(),
