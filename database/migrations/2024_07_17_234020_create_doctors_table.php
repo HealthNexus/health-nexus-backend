@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('hospital_id')->constrained();
+            $table->string('name');
             $table->timestamps();
         });
     }
