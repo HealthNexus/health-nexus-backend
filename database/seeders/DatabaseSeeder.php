@@ -51,7 +51,12 @@ class DatabaseSeeder extends Seeder
             'Arthritis',
         ];
         foreach ($diseases as $disease) {
-            \App\Models\Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
+            $dis = \App\Models\Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
+            $id = random_int(1, 5);
+            $dis->patients()->attach(floor($id));
         }
+
+        $patient = User::find(2);
+        $patient->diseases()->attach(3);
     }
 }
