@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Disease extends Model
 {
@@ -15,5 +16,10 @@ class Disease extends Model
     public function patients(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'disease_user', 'disease_id', 'user_id')->as('records')->withTimestamps();
+    }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
     }
 }
