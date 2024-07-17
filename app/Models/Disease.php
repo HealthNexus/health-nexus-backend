@@ -14,6 +14,6 @@ class Disease extends Model
 
     public function patients(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'disease_user', 'disease_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'disease_user', 'disease_id', 'user_id')->as('records')->withTimestamps();
     }
 }
