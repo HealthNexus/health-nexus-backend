@@ -51,6 +51,6 @@ class User extends Authenticatable
 
     public function diseases(): BelongsToMany
     {
-        return $this->belongsToMany(Disease::class, 'disease_user', 'user_id', 'disease_id');
+        return $this->belongsToMany(Disease::class, 'disease_user', 'user_id', 'disease_id')->withTimestamps();
     }
 }
