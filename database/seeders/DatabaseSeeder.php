@@ -15,13 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        Post::factory()->count(10)->create();
-
+        //create hospitals
         Hospital::factory()->count(10)->create();
 
+        //create random users
         User::factory()->count(10)->create();
+
 
         //create disease
         $diseases = [
@@ -52,11 +51,13 @@ class DatabaseSeeder extends Seeder
         ];
         foreach ($diseases as $disease) {
             $dis = \App\Models\Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
-            $id = random_int(1, 5);
+            $id = random_int(1, 10);
             $dis->patients()->attach(floor($id));
         }
 
         $patient = User::find(2);
         $patient->diseases()->attach(3);
+
+        Post::factory()->count(10)->create();
     }
 }
