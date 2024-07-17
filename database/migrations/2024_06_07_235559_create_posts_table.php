@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->text('title')->unique();
+            $table->foreignId('disease_id')->constrained();
+            $table->string('title')->unique();
             $table->text('excerpt');
             $table->text('body');
             $table->text('thumbnail')->nullable();
