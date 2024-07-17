@@ -14,7 +14,7 @@ class PostController extends Controller
     {
         //,
         $posts = Post::all();
-        return response(['posts'=>$posts], 200);
+        return response(['posts' => $posts], 200);
     }
 
     /**
@@ -23,19 +23,19 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->validate([
+            'disease_id' => ['numeric'],
             'title' => ['required', 'max:255'],
-            'excerpt'=>['required', 'string'],
+            'excerpt' => ['required', 'string'],
             'body' => ['required', 'string'],
-            'thumbnail'=>['image', 'max:2048']
+            'thumbnail' => ['image', 'max:2048']
         ]);
 
         $post = Post::create($attributes);
 
-        return response ([
+        return response([
             'post' => $post,
             'message' => 'Post successfully created'
         ], 200);
-
     }
 
     /**
@@ -44,7 +44,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return response([
-            'post'=>$post
+            'post' => $post
         ], 200);
     }
 
@@ -55,17 +55,18 @@ class PostController extends Controller
     {
         //
         $attributes = $request->validate([
+            'disease_id' => ['numeric'],
             'title' => ['max:255'],
-            'excerpt'=>['string'],
+            'excerpt' => ['string'],
             'body' => ['string'],
-            'thumbnail'=>['image', 'max:2048']
+            'thumbnail' => ['image', 'max:2048']
         ]);
 
         $post->update($attributes);
 
         return response([
-            'post'=>$post,
-            'message'=> 'post updated successfully'
+            'post' => $post,
+            'message' => 'post updated successfully'
         ], 200);
     }
 
@@ -76,7 +77,7 @@ class PostController extends Controller
     {
         $post->delete();
         return response([
-            'message'=>'post deleted successfully',
+            'message' => 'post deleted successfully',
         ], 204);
     }
 }
