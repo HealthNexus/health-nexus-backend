@@ -40,14 +40,33 @@ class DatabaseSeeder extends Seeder
             'Respiratory Disease',
             'Gastrointestinal Disease',
         ];
-        foreach ($categories as $category) {
-            Category::factory()->create(['name' => $category]);
-        }
-
-        //create drugs
-        Drug::factory()->count(10)->create();
-
-        //create drug_categories
+        //create disease
+        $diseases = [
+            'Covid-19',
+            'Malaria',
+            'Typhoid',
+            'HIV/AIDS', '
+                Diabetes',
+            'Hypertension',
+            'Cancer',
+            'Tuberculosis',
+            'Cholera',
+            'Yellow Fever',
+            'Measles',
+            'Chicken Pox',
+            'Lassa Fever',
+            'Ebola',
+            'Influenza',
+            'Pneumonia',
+            'Meningitis',
+            'Hepatitis',
+            'Dysentery',
+            'Chronic Kidney Disease',
+            'Heart Disease',
+            'Stroke',
+            'Asthma',
+            'Arthritis',
+        ];
         $drug_categories = [
             'Antibiotics',
             'Analgesics',
@@ -125,14 +144,6 @@ class DatabaseSeeder extends Seeder
             'Respiratory Disease',
             'Gastrointestinal Disease',
         ];
-        foreach ($drug_categories as $category) {
-            $dc = DrugCategory::factory()->create(['name' => $category]);
-
-            //attach drugs to drug category
-            $dc->drugs()->attach(rand(1, 10));
-        }
-
-        //create Symptoms
         $symptoms = [
             'Fever',
             'Headache',
@@ -209,47 +220,31 @@ class DatabaseSeeder extends Seeder
             'Shortness of Breath',
             'Loss of Taste or Smell',
         ];
+
+
+        //create drugs
+        Drug::factory()->count(10)->create();
+
+        //create drug_categories
+        foreach ($drug_categories as $category) {
+            $dc = DrugCategory::factory()->create(['name' => $category]);
+
+            //attach drugs to drug category
+            $dc->drugs()->attach(rand(1, 10));
+        }
+
+        //create symptoms
         foreach ($symptoms as $symptom) {
             Symptom::create(['description' => $symptom]);
         }
 
 
-        //create disease
-        $diseases = [
-            'Covid-19',
-            'Malaria',
-            'Typhoid',
-            'HIV/AIDS', '
-            Diabetes',
-            'Hypertension',
-            'Cancer',
-            'Tuberculosis',
-            'Cholera',
-            'Yellow Fever',
-            'Measles',
-            'Chicken Pox',
-            'Lassa Fever',
-            'Ebola',
-            'Influenza',
-            'Pneumonia',
-            'Meningitis',
-            'Hepatitis',
-            'Dysentery',
-            'Chronic Kidney Disease',
-            'Heart Disease',
-            'Stroke',
-            'Asthma',
-            'Arthritis',
-        ];
+        // create diseases in database
         foreach ($diseases as $disease) {
             $dis = Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
 
             //attach pateints to disease
             $dis->patients()->attach(rand(1, 10));
-
-
-            //attach a category
-            $dis->categories()->attach(rand(1, 5));
 
             //attach drugs
             $dis->drugs()->attach(rand(1, 10));
@@ -258,10 +253,18 @@ class DatabaseSeeder extends Seeder
             $dis->symptoms()->attach(rand(1, count($symptoms)));
         }
 
-        $patient = User::find(2);
-        $patient->diseases()->attach(3);
-
         //create fake posts
         Post::factory()->count(10)->create();
+
+        //create categories in database
+        foreach ($categories as $category) {
+            $category = Category::factory()->create(['name' => $category]);
+
+            //attach posts to category
+            $category->posts()->attach(rand(1, 10));
+
+            //attach diseases to category
+            $category->diseases()->attach(rand(1, count($diseases)));
+        }
     }
 }
