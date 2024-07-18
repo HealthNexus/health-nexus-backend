@@ -10,6 +10,7 @@ use Illuminate\Validation\Rules;
 class AuthController extends Controller
 {
     // Register
+    private $patientRole = 5;
     public function register(Request $request)
     {
         $validatedData = $request->validate([
@@ -23,7 +24,7 @@ class AuthController extends Controller
         $validatedData['password'] = bcrypt($request->password);
 
         //set role_id to 5 which is the default role for patients
-        $validatedData['role_id'] = 5;
+        $validatedData['role_id'] = $this->patientRole;
 
         $user = User::create($validatedData);
 
