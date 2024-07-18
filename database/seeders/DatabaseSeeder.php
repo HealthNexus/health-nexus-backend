@@ -31,7 +31,18 @@ class DatabaseSeeder extends Seeder
         User::factory()->count(10)->create();
 
         //create categories
-        Category::factory()->count(5)->create();
+        $categories = [
+            'Chronic Disease',
+            'Infectious Disease',
+            'Mental Health',
+            'Cancer',
+            'Heart Disease',
+            'Respiratory Disease',
+            'Gastrointestinal Disease',
+        ];
+        foreach ($categories as $category) {
+            Category::factory()->create(['name' => $category]);
+        }
 
         //create drugs
         Drug::factory()->count(10)->create();
