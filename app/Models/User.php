@@ -4,7 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -45,7 +47,7 @@ class User extends Authenticatable
     }
 
     //relationship between user and hospital
-    public function hospital()
+    public function hospital(): BelongsTo
     {
         return $this->belongsTo(Hospital::class);
     }
@@ -57,8 +59,14 @@ class User extends Authenticatable
     }
 
     //relationship between user and comment
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+    //relationship between user and reply
+    public function replies(): HasMany
+    {
+        return $this->hasMany(Reply::class);
     }
 }
