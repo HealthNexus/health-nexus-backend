@@ -10,8 +10,10 @@ use App\Models\DrugCategory;
 use App\Models\Hospital;
 use App\Models\Post;
 use App\Models\Reply;
+use App\Models\Role;
 use App\Models\Symptom;
 use App\Models\User;
+use Illuminate\Support\Str;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +24,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        //roles
+        $roles = [
+            'Admin',
+            'Doctor',
+            'Nurse',
+            'Pharmacist',
+            'Patient',
+        ];
         //create categories
         $categories = [
             'Chronic Disease',
@@ -214,6 +224,11 @@ class DatabaseSeeder extends Seeder
         ];
 
 
+        //create roles
+        foreach ($roles as $role) {
+            Role::create(['name' => $role, 'slug' => Str::slug($role)]);
+        }
+
         //create hospitals
         Hospital::factory()->count(10)->create();
 
@@ -244,7 +259,7 @@ class DatabaseSeeder extends Seeder
 
         // create diseases in database
         foreach ($diseases as $disease) {
-            $dis = Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
+            $dis = Disease::create(['name' => $disease, 'slug' => Str::slug($disease)]);
 
             //attach pateints to disease
             $dis->patients()->attach(rand(1, 10));
