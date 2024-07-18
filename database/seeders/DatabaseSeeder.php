@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Doctor;
 use App\Models\Hospital;
 use App\Models\Post;
@@ -24,6 +25,9 @@ class DatabaseSeeder extends Seeder
 
         //create random users
         User::factory()->count(10)->create();
+
+        //create categories
+        Category::factory()->count(5)->create();
 
 
         //create disease
@@ -55,8 +59,13 @@ class DatabaseSeeder extends Seeder
         ];
         foreach ($diseases as $disease) {
             $dis = \App\Models\Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
-            $id = random_int(1, 10);
-            $dis->patients()->attach(floor($id));
+
+            //attach pateints to disease
+            $dis->patients()->attach(rand(1, 10));
+
+
+            //attach a category
+            $dis->categories()->attach(rand(1, 5));
         }
 
         $patient = User::find(2);
