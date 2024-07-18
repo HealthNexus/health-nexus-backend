@@ -10,6 +10,7 @@ use App\Models\Drug;
 use App\Models\DrugCategory;
 use App\Models\Hospital;
 use App\Models\Post;
+use App\Models\Reply;
 use App\Models\Symptom;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -268,5 +269,8 @@ class DatabaseSeeder extends Seeder
 
         //create comments which will inturn create users and posts
         Comment::factory()->count(20)->create();
+
+        //create replies
+        Reply::factory()->count(50)->create();
     }
 }
