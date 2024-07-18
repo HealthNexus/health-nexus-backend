@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Disease;
 use App\Models\Doctor;
 use App\Models\Drug;
+use App\Models\DrugCategory;
 use App\Models\Hospital;
 use App\Models\Post;
 use App\Models\Symptom;
@@ -34,6 +35,91 @@ class DatabaseSeeder extends Seeder
 
         //create drugs
         Drug::factory()->count(10)->create();
+
+        //create drug_categories
+        $drug_categories = [
+            'Antibiotics',
+            'Analgesics',
+            'Antipyretics',
+            'Antimalarial',
+            'Antiviral',
+            'Antifungal',
+            'Antihistamines',
+            'Antacids',
+            'Antidiarrheal',
+            'Antitussive',
+            'Expectorants',
+            'Decongestants',
+            'Anticoagulants',
+            'Anticonvulsants',
+            'Antidepressants',
+            'Antipsychotics',
+            'Antianxiety',
+            'Antihypertensive',
+            'Antihyperlipidemic',
+            'Antidiabetic',
+            'Anticoagulants',
+            'Anticonvulsants',
+            'Antidepressants',
+            'Antipsychotics',
+            'Antianxiety',
+            'Antihypertensive',
+            'Antihyperlipidemic',
+            'Antidiabetic',
+            'Anticoagulants',
+            'Anticonvulsants',
+            'Antidepressants',
+            'Antipsychotics',
+            'Antianxiety',
+            'Antihypertensive',
+            'Antihyperlipidemic',
+            'Antidiabetic',
+            'Anticoagulants',
+            'Anticonvulsants',
+            'Antidepressants',
+            'Antipsychotics',
+            'Antianxiety',
+            'Antihypertensive',
+            'Antihyperlipidemic',
+            'Antidiabetic',
+            'Anticoagulants',
+            'Anticonvulsants',
+            'Antidepressants',
+            'Antipsychotics',
+            'Antianxiety',
+            'Antihypertensive',
+            'Antihyperlipidemic',
+            'Antidiabetic',
+            'Anticoagulants',
+            'Anticonvulsants',
+            'Antidepressants',
+            'Antipsychotics',
+            'Antianxiety',
+            'Antihypertensive',
+            'Antihyperlipidemic',
+            'Antidiabetic',
+            'Anticoagulants',
+            'Anticonvulsants',
+            'Antidepressants',
+            'Antipsychotics',
+            'Antianxiety',
+            'Antihypertensive',
+            'Antihyperlipidemic',
+            'Antidiabetic',
+            'Chronic Disease',
+            'Infectious Disease',
+            'Mental Health',
+            'Cancer',
+            'Heart Disease',
+            'Respiratory Disease',
+            'Gastrointestinal Disease',
+        ];
+        foreach ($drug_categories as $category) {
+            $dc = DrugCategory::factory()->create(['name' => $category]);
+
+            //attach drugs to drug category
+            $dc->drugs()->attach(rand(1, 10));
+        }
 
         //create Symptoms
         $symptoms = [

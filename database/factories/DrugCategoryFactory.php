@@ -17,7 +17,9 @@ class DrugCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->word,
+            'slug' => fake()->unique()->slug(2),
+            'description' => $this->faker->sentence,
         ];
     }
 }
