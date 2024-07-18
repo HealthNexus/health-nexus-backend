@@ -18,6 +18,13 @@ class Disease extends Model
         return $this->belongsToMany(User::class, 'disease_user', 'disease_id', 'user_id')->as('records')->withTimestamps();
     }
 
+    //Disease and Category relationship
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_disease', 'disease_id', 'category_id')->withTimestamps();
+    }
+
+
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
