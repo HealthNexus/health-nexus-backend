@@ -17,7 +17,7 @@ class SymptomFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'description' => fake()->sentence(4)
         ];
     }
 }

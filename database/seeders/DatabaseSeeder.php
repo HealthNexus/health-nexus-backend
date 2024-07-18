@@ -3,10 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Disease;
 use App\Models\Doctor;
 use App\Models\Drug;
 use App\Models\Hospital;
 use App\Models\Post;
+use App\Models\Symptom;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -32,6 +34,87 @@ class DatabaseSeeder extends Seeder
 
         //create drugs
         Drug::factory()->count(10)->create();
+
+        //create Symptoms
+        $symptoms = [
+            'Fever',
+            'Headache',
+            'Cough',
+            'Sore Throat',
+            'Fatigue',
+            'Muscle Aches',
+            'Shortness of Breath',
+            'Loss of Taste or Smell',
+            'Diarrhea',
+            'Nausea',
+            'Vomiting',
+            'Chills',
+            'Congestion or Runny Nose',
+            'Muscle Aches',
+            'Sore Throat',
+            'Fatigue',
+            'Muscle Aches',
+            'Shortness of Breath',
+            'Loss of Taste or Smell',
+            'Diarrhea',
+            'Nausea',
+            'Vomiting',
+            'Chills',
+            'Congestion or Runny Nose',
+            'Muscle Aches',
+            'Sore Throat',
+            'Fatigue',
+            'Muscle Aches',
+            'Shortness of Breath',
+            'Loss of Taste or Smell',
+            'Diarrhea',
+            'Nausea',
+            'Vomiting',
+            'Chills',
+            'Congestion or Runny Nose',
+            'Muscle Aches',
+            'Sore Throat',
+            'Fatigue',
+            'Muscle Aches',
+            'Shortness of Breath',
+            'Loss of Taste or Smell',
+            'Diarrhea',
+            'Nausea',
+            'Vomiting',
+            'Chills',
+            'Congestion or Runny Nose',
+            'Muscle Aches',
+            'Sore Throat',
+            'Fatigue',
+            'Muscle Aches',
+            'Shortness of Breath',
+            'Loss of Taste or Smell',
+            'Diarrhea',
+            'Nausea',
+            'Vomiting',
+            'Chills',
+            'Congestion or Runny Nose',
+            'Muscle Aches',
+            'Sore Throat',
+            'Fatigue',
+            'Muscle Aches',
+            'Shortness of Breath',
+            'Loss of Taste or Smell',
+            'Diarrhea',
+            'Nausea',
+            'Vomiting',
+            'Chills',
+            'Congestion or Runny Nose',
+            'Muscle Aches',
+            'Sore Throat',
+            'Fatigue',
+            'Muscle Aches',
+            'Shortness of Breath',
+            'Loss of Taste or Smell',
+        ];
+        foreach ($symptoms as $symptom) {
+            Symptom::create(['description' => $symptom]);
+        }
 
 
         //create disease
@@ -62,7 +145,7 @@ class DatabaseSeeder extends Seeder
             'Arthritis',
         ];
         foreach ($diseases as $disease) {
-            $dis = \App\Models\Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
+            $dis = Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
 
             //attach pateints to disease
             $dis->patients()->attach(rand(1, 10));
@@ -72,8 +155,10 @@ class DatabaseSeeder extends Seeder
             $dis->categories()->attach(rand(1, 5));
 
             //attach drugs
-
             $dis->drugs()->attach(rand(1, 10));
+
+            //attach symptoms
+            $dis->symptoms()->attach(rand(1, count($symptoms)));
         }
 
         $patient = User::find(2);
