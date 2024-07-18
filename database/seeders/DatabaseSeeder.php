@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Doctor;
+use App\Models\Drug;
 use App\Models\Hospital;
 use App\Models\Post;
 use App\Models\User;
@@ -28,6 +29,9 @@ class DatabaseSeeder extends Seeder
 
         //create categories
         Category::factory()->count(5)->create();
+
+        //create drugs
+        Drug::factory()->count(10)->create();
 
 
         //create disease
@@ -66,6 +70,10 @@ class DatabaseSeeder extends Seeder
 
             //attach a category
             $dis->categories()->attach(rand(1, 5));
+
+            //attach drugs
+
+            $dis->drugs()->attach(rand(1, 10));
         }
 
         $patient = User::find(2);
