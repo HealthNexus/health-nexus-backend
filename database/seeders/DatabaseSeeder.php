@@ -239,6 +239,11 @@ class DatabaseSeeder extends Seeder
         }
 
 
+        //create categories in database
+        foreach ($categories as $category) {
+            $category = Category::factory()->create(['name' => $category]);
+        }
+
         // create diseases in database
         foreach ($diseases as $disease) {
             $dis = Disease::create(['name' => $disease, 'slug' => \Illuminate\Support\Str::slug($disease)]);
@@ -251,20 +256,12 @@ class DatabaseSeeder extends Seeder
 
             //attach symptoms
             $dis->symptoms()->attach(rand(1, count($symptoms)));
+
+            //attach categories
+            $dis->categories()->attach(rand(1, count($categories)));
         }
 
         //create fake posts
         Post::factory()->count(10)->create();
-
-        //create categories in database
-        foreach ($categories as $category) {
-            $category = Category::factory()->create(['name' => $category]);
-
-            //attach posts to category
-            $category->posts()->attach(rand(1, 10));
-
-            //attach diseases to category
-            $category->diseases()->attach(rand(1, count($diseases)));
-        }
     }
 }
