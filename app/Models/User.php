@@ -69,4 +69,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reply::class);
     }
+
+    //relationship between user and role
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
 }
