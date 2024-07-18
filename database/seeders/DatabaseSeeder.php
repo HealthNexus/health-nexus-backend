@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Disease;
 use App\Models\Doctor;
 use App\Models\Drug;
@@ -21,15 +22,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //create hospitals
-        Hospital::factory()->count(10)->create();
-
-        //create Doctors
-        Doctor::factory()->count(10)->create();
-
-        //create random users
-        User::factory()->count(10)->create();
-
         //create categories
         $categories = [
             'Chronic Disease',
@@ -222,8 +214,17 @@ class DatabaseSeeder extends Seeder
         ];
 
 
+        //create hospitals
+        Hospital::factory()->count(10)->create();
+
+        //create Doctors
+        Doctor::factory()->count(10)->create();
+
         //create drugs
         Drug::factory()->count(10)->create();
+
+        //create users
+        User::factory()->count(10)->create();
 
         //create drug_categories
         foreach ($drug_categories as $category) {
@@ -261,7 +262,11 @@ class DatabaseSeeder extends Seeder
             $dis->categories()->attach(rand(1, count($categories)));
         }
 
-        //create fake posts
-        Post::factory()->count(10)->create();
+
+        //create posts
+        Post::factory()->count(5)->create();
+
+        //create comments which will inturn create users and posts
+        Comment::factory()->count(20)->create();
     }
 }
