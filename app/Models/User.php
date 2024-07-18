@@ -44,13 +44,21 @@ class User extends Authenticatable
         ];
     }
 
+    //relationship between user and hospital
     public function hospital()
     {
         return $this->belongsTo(Hospital::class);
     }
 
+    //relationship between user and disease
     public function diseases(): BelongsToMany
     {
         return $this->belongsToMany(Disease::class, 'disease_user', 'user_id', 'disease_id')->as('records')->withTimestamps();
+    }
+
+    //relationship between user and comment
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }
