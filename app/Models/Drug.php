@@ -17,4 +17,10 @@ class Drug extends Model
     {
         return $this->belongsToMany(Disease::class)->withTimestamps();
     }
+
+    //Drug and DrugCategory relationship
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(DrugCategory::class)->withTimestamps();
+    }
 }
