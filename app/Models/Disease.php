@@ -33,7 +33,7 @@ class Disease extends Model
     //Symptom and Disease relationship
     public function symptoms(): BelongsToMany
     {
-        return $this->belongsToMany(Symptom::class);
+        return $this->belongsToMany(Symptom::class)->withTimestamps();
     }
 
     public function posts(): HasMany
