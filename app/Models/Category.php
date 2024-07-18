@@ -11,12 +11,6 @@ class Category extends Model
     use HasFactory;
     protected $guarded = [];
 
-    //Category and Post relationship
-    public function posts(): BelongsToMany
-    {
-        return $this->belongsToMany(Post::class);
-    }
-
     //Disease and Category relationship
     public function diseases(): BelongsToMany
     {

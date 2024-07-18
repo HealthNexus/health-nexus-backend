@@ -54,17 +54,15 @@ class Post extends Model
             );
     }
 
+    //post comment relationship
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
 
-    //Category and Post relationship
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(Category::class);
-    }
 
+
+    //disease post relationship
     public function disease(): BelongsTo
     {
         return $this->belongsTo(Disease::class);
