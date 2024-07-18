@@ -17,7 +17,8 @@ class DoctorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'hospital_id' => fake()->numberBetween(1, 10),
+            'name' => fake()->name()
         ];
     }
 }

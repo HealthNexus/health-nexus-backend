@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Doctor;
 use App\Models\Hospital;
 use App\Models\Post;
 use App\Models\User;
@@ -17,6 +18,9 @@ class DatabaseSeeder extends Seeder
     {
         //create hospitals
         Hospital::factory()->count(10)->create();
+
+        //create Doctors
+        Doctor::factory()->count(10)->create();
 
         //create random users
         User::factory()->count(10)->create();
@@ -58,6 +62,7 @@ class DatabaseSeeder extends Seeder
         $patient = User::find(2);
         $patient->diseases()->attach(3);
 
+        //create fake posts
         Post::factory()->count(10)->create();
     }
 }
