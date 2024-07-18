@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Disease;
-use App\Models\Doctor;
 use App\Models\Drug;
 use App\Models\DrugCategory;
 use App\Models\Hospital;
@@ -217,9 +216,6 @@ class DatabaseSeeder extends Seeder
 
         //create hospitals
         Hospital::factory()->count(10)->create();
-
-        //create Doctors
-        Doctor::factory()->count(10)->create();
 
         //create drugs
         Drug::factory()->count(10)->create();
