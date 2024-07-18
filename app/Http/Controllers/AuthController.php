@@ -17,10 +17,13 @@ class AuthController extends Controller
             'email' => ['email', 'required', 'unique:users'],
             'password' => ['confirmed', Rules\Password::defaults()],
             'avatar' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'hospital_id' => ['required', ],
+            'hospital_id' => ['required', 'integer'],
         ]);
 
         $validatedData['password'] = bcrypt($request->password);
+
+        //set role_id to 5 which is the default role for patients
+        $validatedData['role_id'] = 5;
 
         $user = User::create($validatedData);
 
