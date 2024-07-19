@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReplyController;
 use Illuminate\Http\Request;
@@ -13,6 +14,9 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 
 //retrieve all posts
 Route::get('/posts', [PostController::class, 'index']);
+
+//retrieve all hospitals
+Route::get('/hospitals', [HospitalController::class, 'index']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
