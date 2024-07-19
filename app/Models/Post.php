@@ -13,6 +13,7 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $with = ['author', 'comments'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -66,5 +67,11 @@ class Post extends Model
     public function disease(): BelongsTo
     {
         return $this->belongsTo(Disease::class);
+    }
+
+    //post writer relationship
+    public function writer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
