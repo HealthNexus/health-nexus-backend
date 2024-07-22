@@ -13,7 +13,7 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $with = ['author', 'comments'];
+    protected $with = ['writer', 'comments'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -58,7 +58,7 @@ class Post extends Model
     //post comment relationship
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
     }
 
 

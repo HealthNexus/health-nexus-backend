@@ -11,6 +11,8 @@ class Reply extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $with = ['writer'];
+
     //comment reply relationship
     public function comment(): BelongsTo
     {
