@@ -12,6 +12,8 @@ class Comment extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $with = ['writer', 'replies'];
+
     //relationship between commentss and replies
     public function replies(): HasMany
     {
@@ -19,7 +21,7 @@ class Comment extends Model
     }
 
     //relationship between comments and post
-    public function post():BelongsTo
+    public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
     }
