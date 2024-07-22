@@ -16,7 +16,7 @@ class CommentController extends Controller
             'body' => ['required', 'max:500']
         ]);
 
-        $post->comments()->create([
+        $comment = $post->comments()->create([
 
             'body' => request('body'),
 
@@ -24,16 +24,23 @@ class CommentController extends Controller
         ]);
 
         return response([
+            'comment' => $comment,
             'message' => 'Comment created'
-        ], 200);
+        ], 201);
     }
 
     //delete comment
     public function destroy(Comment $comment)
     {
-        $comment->delete();
-        return response([
-            'message' => 'Comment deleted'
-        ], 200);
+        if ($comment->user_id !== request()->user()->id) {
+            return response([
+                'message' => 'Unauthorized'
+            ], 401);
+        } else {
+            $comment->delete();
+            return response([
+                'message' => 'Comment deleted'
+            ], 200);
+        }
     }
 }
