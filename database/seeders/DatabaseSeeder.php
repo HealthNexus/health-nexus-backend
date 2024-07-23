@@ -268,10 +268,20 @@ class DatabaseSeeder extends Seeder
             $dis->drugs()->attach(rand(1, 10));
 
             //attach symptoms
-            $dis->symptoms()->attach(rand(1, count($symptoms)));
+            $id = rand(1, count($symptoms));
+            $dis->symptoms()->attach($id);
+            $id = rand(1, count($symptoms));
+            $dis->symptoms()->attach($id);
+            $id = rand(1, count($symptoms));
+            $dis->symptoms()->attach($id);
+            $id = rand(1, count($symptoms));
+            $dis->symptoms()->attach($id);
 
             //attach categories
-            $dis->categories()->attach(rand(1, count($categories)));
+            $categoryId = rand(1, count($categories));
+            $dis->categories()->attach($categoryId);
+            $categoryId = rand(1, count($categories));
+            $dis->categories()->attach($categoryId);
         }
 
 
