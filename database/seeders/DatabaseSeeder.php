@@ -236,7 +236,8 @@ class DatabaseSeeder extends Seeder
         Drug::factory()->count(10)->create();
 
         //create users
-        User::factory()->count(10)->create();
+        User::factory()->count(9)->create();
+        User::factory()->create(['name' => 'Admin', 'email' => 'admin@gmail.com', 'role_id' => 1, 'password' => bcrypt('password')]);
 
         //create drug_categories
         foreach ($drug_categories as $category) {
