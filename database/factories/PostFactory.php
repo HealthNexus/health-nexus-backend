@@ -19,11 +19,11 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => fake()->numberBetween(1, 10),
             'title' => fake()->unique()->sentence(),
             'disease_id' => fake()->numberBetween(1, 10),
             'excerpt' => fake()->paragraph(1),
             'body' => fake()->paragraph(10),
-            'thumbnail' => fake()->unique()->word(),
             'created_at' => now(),
             'updated_at' => now(),
         ];
