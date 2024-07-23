@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RecordController;
 use App\Http\Controllers\ReplyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,5 +48,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //reply routes
     Route::post('/comments/{comment}/replies', [ReplyController::class, 'store']);
-    Route::delete('/replies/{reply}/destroy', [ReplyController::class, 'destroy']);;
+    Route::delete('/replies/{reply}/destroy', [ReplyController::class, 'destroy']);
+
+    //records
+    Route::get('/records', [RecordController::class, 'index']);
 });
