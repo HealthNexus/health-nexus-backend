@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReplyController;
@@ -18,6 +20,12 @@ Route::get('/posts', [PostController::class, 'index']);
 //retrieve all hospitals
 Route::get('/hospitals', [HospitalController::class, 'index']);
 
+//diseases routes
+Route::get('/diseases', [DiseaseController::class, 'index']);
+
+//retrievee all disease categories
+Route::get('/diseases/categories', [CategoryController::class, 'index']);
+
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // create a new route for logout
@@ -29,15 +37,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     //posts routes
-    Route::post('/posts/create', [PostController::class, 'store']);
+    Route::post('/posts/store', [PostController::class, 'store']);
     Route::put('/posts/{post}/update', [PostController::class, 'update']);
     Route::delete('/posts/{post}/destroy', [PostController::class, 'destroy']);
 
-    //comments routes with comment controller
+    //comments routes
     Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
     Route::delete('/comments/{comment}/destroy', [CommentController::class, 'destroy']);
 
-    //reply routes with reply controller
+    //reply routes
     Route::post('/comments/{comment}/replies', [ReplyController::class, 'store']);
-    Route::delete('/replies/{reply}/destroy', [ReplyController::class, 'destroy']);
+    Route::delete('/replies/{reply}/destroy', [ReplyController::class, 'destroy']);;
 });
