@@ -12,7 +12,8 @@ class DiseaseController extends Controller
      */
     public function index()
     {
-        //
+        $disease = Disease::all();
+        return response(['disease' => $disease], 200);
     }
 
     /**
