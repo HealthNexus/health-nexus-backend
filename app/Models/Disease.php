@@ -12,6 +12,7 @@ class Disease extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $with = ['categories', 'drugs', 'symptoms'];
 
     public function patients(): BelongsToMany
     {
