@@ -13,7 +13,7 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $with = ['writer', 'comments'];
+    protected $with = ['writer', 'comments', 'disease'];
 
     public function scopeFilter($query, array $filters)
     {
