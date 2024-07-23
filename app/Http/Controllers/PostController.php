@@ -27,10 +27,12 @@ class PostController extends Controller
             'title' => ['required', 'max:255'],
             'excerpt' => ['required', 'string'],
             'body' => ['required', 'string'],
-            'thumbnail' => ['image', 'max:2048']
+            'thumbnail' => ['required', 'image', 'max:2048']
         ]);
 
-        $post = Post::create($attributes);
+        $thumbnail = $this->saveImage($request->thumbnail, 'posts');
+        $attributes['thumbnail'] = $thumbnail;
+        $post = auth()->user()->posts()->create($attributes);
 
         return response([
             'post' => $post,
