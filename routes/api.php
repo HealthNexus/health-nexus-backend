@@ -52,4 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //records
     Route::get('/records', [RecordController::class, 'index']);
+    Route::get('/month-disease-data', [RecordController::class, 'monthDiseaseData']);
+    Route::get('/day-disease-data', [RecordController::class, 'dayDiseaseData']);
+    Route::get('/year-disease-data', [RecordController::class, 'yearDiseaseData']);
 });
