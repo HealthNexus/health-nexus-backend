@@ -243,8 +243,9 @@ class DatabaseSeeder extends Seeder
         foreach ($drug_categories as $category) {
             $dc = DrugCategory::factory()->create(['name' => $category]);
 
+            $drug_id = rand(1, 10);
             //attach drugs to drug category
-            $dc->drugs()->attach(rand(1, 10));
+            $dc->drugs()->attach($drug_id);
         }
 
         //create symptoms
@@ -263,10 +264,11 @@ class DatabaseSeeder extends Seeder
             $dis = Disease::create(['name' => $disease, 'slug' => Str::slug($disease)]);
 
             //attach pateints to disease
-            $dis->patients()->attach(rand(1, 10));
+            $rand = rand(1, 10);
+            $dis->patients()->attach($rand);
 
             //attach drugs
-            $dis->drugs()->attach(rand(1, 10));
+            $dis->drugs()->attach($rand);
 
             //attach symptoms
             $id = rand(1, count($symptoms));
