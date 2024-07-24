@@ -56,7 +56,7 @@ class User extends Authenticatable
     //relationship between user and disease
     public function diseases(): BelongsToMany
     {
-        return $this->belongsToMany(Disease::class, 'disease_user', 'user_id', 'disease_id')->as('records')->withTimestamps();
+        return $this->belongsToMany(Disease::class, 'disease_user', 'user_id', 'disease_id')->as('record')->withTimestamps();
     }
 
     //relationship between user and comment

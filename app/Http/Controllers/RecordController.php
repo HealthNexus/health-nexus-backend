@@ -15,7 +15,7 @@ class RecordController extends Controller
         $formattedRecords = auth()->user()->diseases->map(function ($disease) use (&$id, &$record_dates) {
             $id++;
 
-            $record_dates->push($disease->records->created_at);
+            $record_dates->push($disease->record->created_at);
 
             // // Extract the contraction dates
             // $contractionDates = $disease->users->map(function ($user) use ($disease) {
@@ -48,7 +48,7 @@ class RecordController extends Controller
                 'symptoms' => $disease->symptoms->pluck('description'),
                 'modalDay' => $modalDay,
                 'modalMonth' => $modalMonth,
-                'date' => $disease->records->created_at->diffForHumans()
+                'date' => $disease->record->created_at->diffForHumans()
             ];
         });
 
@@ -97,7 +97,7 @@ class RecordController extends Controller
 
         foreach ($months as $month) {
             $monthDiseaseCount = auth()->user()->diseases->filter(function ($disease) use ($month) {
-                return Carbon::parse($disease->records->created_at)->format('F') === $month;
+                return Carbon::parse($disease->record->created_at)->format('F') === $month;
             })->count();
             $data->push($monthDiseaseCount);
         }
@@ -162,7 +162,7 @@ class RecordController extends Controller
 
         foreach ($days as $day) {
             $dayDiseaseCount = auth()->user()->diseases->filter(function ($disease) use ($day) {
-                return Carbon::parse($disease->records->created_at)->format('l') === $day;
+                return Carbon::parse($disease->record->created_at)->format('l') === $day;
             })->count();
             $data->push($dayDiseaseCount);
         }
@@ -218,7 +218,7 @@ class RecordController extends Controller
 
         foreach ($years as $year) {
             $yearDiseaseCount = auth()->user()->diseases->filter(function ($disease) use ($year) {
-                return Carbon::parse($disease->records->created_at)->year === $year;
+                return Carbon::parse($disease->record->created_at)->year === $year;
             })->count();
             $data->push($yearDiseaseCount);
         }
