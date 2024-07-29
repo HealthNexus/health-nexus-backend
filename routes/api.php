@@ -66,4 +66,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //drugs
     Route::get('/drugs', [DrugController::class, 'index']);
+
+    //general analytics
+    Route::get('/records/analytics/general/{year}/months', [RecordController::class, 'monthsVsDiseasesPerYearSelected']);
 });

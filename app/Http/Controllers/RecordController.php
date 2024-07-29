@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Disease;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class RecordController extends Controller
 {
@@ -16,21 +19,6 @@ class RecordController extends Controller
             $id++;
 
             $record_dates->push($disease->record->created_at);
-
-            // // Extract the contraction dates
-            // $contractionDates = $disease->users->map(function ($user) use ($disease) {
-            //     return $user->pivot->created_at;
-            // });
-
-            // // Compute most common day of the week
-            // $mostCommonDay = $contractionDates->map(function ($date) {
-            //     return Carbon::parse($date)->format('l'); // Get the day of the week
-            // })->mode();
-
-            // // Compute most common month of the year
-            // $mostCommonMonth = $contractionDates->map(function ($date) {
-            //     return Carbon::parse($date)->format('F'); // Get the month
-            // })->mode();
 
             // Compute the most common day of the week for the user
             $modalDay = $record_dates->map(function ($record) {
@@ -48,6 +36,7 @@ class RecordController extends Controller
                 'symptoms' => $disease->symptoms->pluck('description'),
                 'modalDay' => $modalDay,
                 'modalMonth' => $modalMonth,
+                'raw_date' => $disease->record->created_at,
                 'date' => $disease->record->created_at->diffForHumans()
             ];
         });
@@ -55,13 +44,147 @@ class RecordController extends Controller
 
         $result = [
             'patient_name' => auth()->user()->name,
-            'diseases' => $formattedRecords
+            'diseases' => $formattedRecords->sortByDesc('raw_date')->values()->all()
         ];
 
         return response([
             'records' => $result
         ]);
     }
+
+
+    public function store(User $patient)
+    {
+        if (auth()->user()->role->slug === 'doctor' || auth()->user()->role->slug === 'admin') {
+            request()->validate([
+                'disease_id' => 'required|exists:diseases,id',
+                //validate if all ids in the array are valid
+                'symptom_Ids' => [
+                    'required',
+                    'array',
+                    Rule::exists('symptoms', 'id')
+                ],
+                'drug_Ids' => ['required', 'array', Rule::exists('drugs', 'id')],
+            ]);
+
+            $patient->diseases()->attach(request('disease_id'));
+
+
+            // Attach the symptoms to the disease
+            $disease = Disease::find(request('disease_id'));
+            $disease->symptoms()->syncWithoutDetaching(request('symptom_id'));
+
+            // Attach the drugs to the disease
+            $disease->drugs()->syncWithoutDetaching(request('drug_id'));
+
+            $record = $patient->diseases()->where('disease_id', request('disease_id'))->first()->record;
+
+
+            return response()->json(['message' => 'Record added successfully', 'record' => $record]);
+        } else {
+            return response()->json([
+                'message' => 'You are not authorized to perform this action'
+
+            ]);
+        }
+    }
+
+    public function diseasesData()
+    {
+
+        $diseasesCount = User::find(10)->diseases()
+            ->select('disease_id', DB::raw('count(*) as total'))
+            ->groupBy('disease_id')
+            ->get();
+
+        return response()->json(['diseases' => $diseasesCount]);
+    }
+    public function monthsVsDiseasesPerYearSelected($year)
+    {
+        //steps
+        /**
+         * Get the current year which will be passed on the url
+         * Get disease of that year
+         * Group by months
+         * Count the number of diseases in each month
+         * return a json response containing data in vuechatjs format
+         */
+
+
+        $months = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ];
+
+        $data = collect([]);
+
+        $options = [
+            "responsive" => true,
+            "maintainAspectRatio" => false,
+            "plugins" => [
+                "title" => [
+                    "display" => true,
+                    "text" => 'Number of Disease Contraction Each Month',
+                    "font" => [
+                        "size" => 18
+                    ]
+                ]
+            ]
+        ];
+
+        //get all records from the disease_user pivot table
+        $diseasesGroupedByMonthsOFChosenYear = DB::table('disease_user')
+            ->join('diseases', 'disease_user.disease_id', '=', 'diseases.id')
+            ->select('diseases.name', 'disease_user.created_at')
+            ->whereYear('disease_user.created_at', $year)
+            ->get()
+            ->groupBy(function ($record) {
+                return Carbon::parse($record->created_at)->format('F');
+            });
+
+        foreach ($months as $month) {
+            $monthDiseaseCount = $diseasesGroupedByMonthsOFChosenYear->has($month) ? $diseasesGroupedByMonthsOFChosenYear[$month]->count() : 0;
+            $data->push($monthDiseaseCount);
+        }
+        return response([
+            "data" => [
+                'labels' => $months,
+                'datasets' => [
+                    [
+                        'label' => 'Disease Count',
+                        'borderColor' => "#413d3d81",
+                        'backgroundColor' => [
+                            '#FF6384', // January
+                            '#36A2EB', // February
+                            '#FFCE56', // March
+                            '#4BC0C0', // April
+                            '#9966FF', // May
+                            '#FF9F40', // June
+                            '#FF6384', // July
+                            '#36A2EB', // August
+                            '#FFCE56', // September
+                            '#4BC0C0', // October
+                            '#9966FF', // November
+                            '#FF9F40'  // December
+                        ],
+                        'data' => $data,
+                    ]
+                ]
+            ],
+            "options" => $options
+        ]);
+    }
+
 
     public function monthDiseaseData()
     {
@@ -108,6 +231,7 @@ class RecordController extends Controller
                 'datasets' => [
                     [
                         'label' => 'Disease Count',
+                        'borderColor' => "#413d3d81",
                         'backgroundColor' => [
                             '#FF6384', // January
                             '#36A2EB', // February
@@ -173,6 +297,7 @@ class RecordController extends Controller
                 'datasets' => [
                     [
                         'label' => 'Disease Count',
+                        'borderColor' => "#413d3d81",
                         'backgroundColor' => [
                             '#FF6384', // 1
                             '#36A2EB', // 2
@@ -229,6 +354,7 @@ class RecordController extends Controller
                 'datasets' => [
                     [
                         'label' => 'Disease Count',
+                        'borderColor' => "#413d3d81",
                         'backgroundColor' => [
                             '#FF6384', // 1
                             '#36A2EB', // 2
