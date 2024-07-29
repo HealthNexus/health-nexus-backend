@@ -13,9 +13,11 @@ use App\Models\Reply;
 use App\Models\Role;
 use App\Models\Symptom;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -147,81 +149,162 @@ class DatabaseSeeder extends Seeder
             'Gastrointestinal Disease',
         ];
         $symptoms = [
-            'Fever',
-            'Headache',
-            'Cough',
-            'Sore Throat',
-            'Fatigue',
-            'Muscle Aches',
-            'Shortness of Breath',
-            'Loss of Taste or Smell',
-            'Diarrhea',
-            'Nausea',
-            'Vomiting',
-            'Chills',
-            'Congestion or Runny Nose',
-            'Muscle Aches',
-            'Sore Throat',
-            'Fatigue',
-            'Muscle Aches',
-            'Shortness of Breath',
-            'Loss of Taste or Smell',
-            'Diarrhea',
-            'Nausea',
-            'Vomiting',
-            'Chills',
-            'Congestion or Runny Nose',
-            'Muscle Aches',
-            'Sore Throat',
-            'Fatigue',
-            'Muscle Aches',
-            'Shortness of Breath',
-            'Loss of Taste or Smell',
-            'Diarrhea',
-            'Nausea',
-            'Vomiting',
-            'Chills',
-            'Congestion or Runny Nose',
-            'Muscle Aches',
-            'Sore Throat',
-            'Fatigue',
-            'Muscle Aches',
-            'Shortness of Breath',
-            'Loss of Taste or Smell',
-            'Diarrhea',
-            'Nausea',
-            'Vomiting',
-            'Chills',
-            'Congestion or Runny Nose',
-            'Muscle Aches',
-            'Sore Throat',
-            'Fatigue',
-            'Muscle Aches',
-            'Shortness of Breath',
-            'Loss of Taste or Smell',
-            'Diarrhea',
-            'Nausea',
-            'Vomiting',
-            'Chills',
-            'Congestion or Runny Nose',
-            'Muscle Aches',
-            'Sore Throat',
-            'Fatigue',
-            'Muscle Aches',
-            'Shortness of Breath',
-            'Loss of Taste or Smell',
-            'Diarrhea',
-            'Nausea',
-            'Vomiting',
-            'Chills',
-            'Congestion or Runny Nose',
-            'Muscle Aches',
-            'Sore Throat',
-            'Fatigue',
-            'Muscle Aches',
-            'Shortness of Breath',
-            'Loss of Taste or Smell',
+            "Fever",
+            "Cough",
+            "Shortness of breath",
+            "Fatigue",
+            "Muscle aches",
+            "Headache",
+            "Sore throat",
+            "Runny nose",
+            "Congestion",
+            "Loss of taste",
+            "Loss of smell",
+            "Nausea",
+            "Vomiting",
+            "Diarrhea",
+            "Chills",
+            "Sweating",
+            "Chest pain",
+            "Abdominal pain",
+            "Back pain",
+            "Joint pain",
+            "Rash",
+            "Hives",
+            "Itching",
+            "Swelling",
+            "Dizziness",
+            "Lightheadedness",
+            "Fainting",
+            "Palpitations",
+            "Blurred vision",
+            "Double vision",
+            "Eye pain",
+            "Ear pain",
+            "Hearing loss",
+            "Tinnitus",
+            "Sore muscles",
+            "Weakness",
+            "Numbness",
+            "Tingling",
+            "Difficulty swallowing",
+            "Hoarseness",
+            "Wheezing",
+            "Coughing up blood",
+            "Excessive thirst",
+            "Frequent urination",
+            "Night sweats",
+            "Weight loss",
+            "Weight gain",
+            "Increased appetite",
+            "Decreased appetite",
+            "Restlessness",
+            "Insomnia",
+            "Daytime sleepiness",
+            "Mood swings",
+            "Anxiety",
+            "Depression",
+            "Irritability",
+            "Confusion",
+            "Memory loss",
+            "Difficulty concentrating",
+            "Seizures",
+            "Tremors",
+            "Balance problems",
+            "Coordination problems",
+            "Slurred speech",
+            "Swollen glands",
+            "Cold hands",
+            "Cold feet",
+            "Bruising",
+            "Bleeding",
+            "Dry skin",
+            "Pale skin",
+            "Yellow skin",
+            "Red skin",
+            "Purple spots",
+            "Blue lips",
+            "Blue fingernails",
+            "Hair loss",
+            "Excessive sweating",
+            "Body odor",
+            "Bad breath",
+            "Dry mouth",
+            "Sores in mouth",
+            "Gum pain",
+            "Tooth pain",
+            "Bad taste",
+            "Bloating",
+            "Gas",
+            "Heartburn",
+            "Constipation",
+            "Blood in stool",
+            "Dark urine",
+            "Frequent infections",
+            "Slow healing",
+            "High blood pressure",
+            "Low blood pressure",
+            "Rapid heartbeat",
+            "Slow heartbeat",
+            "Yellow eyes",
+            "Red eyes",
+            "Teary eyes",
+            "Eye discharge"
         ];
+
+        $drugs = [
+            "Acetaminophen",
+            "Ibuprofen",
+            "Amoxicillin",
+            "Azithromycin",
+            "Ciprofloxacin",
+            "Metformin",
+            "Lisinopril",
+            "Amlodipine",
+            "Simvastatin",
+            "Atorvastatin",
+            "Omeprazole",
+            "Metoprolol",
+            "Losartan",
+            "Albuterol",
+            "Gabapentin",
+            "Sertraline",
+            "Hydrochlorothiazide",
+            "Furosemide",
+            "Prednisone",
+            "Tramadol",
+            "Clonazepam",
+            "Citalopram",
+            "Levothyroxine",
+            "Montelukast",
+            "Trazodone",
+            "Pantoprazole",
+            "Meloxicam",
+            "Carvedilol",
+            "Cyclobenzaprine",
+            "Escitalopram",
+            "Duloxetine",
+            "Fluoxetine",
+            "Bupropion",
+            "Hydrocodone",
+            "Zolpidem",
+            "Cetirizine",
+            "Loratadine",
+            "Ranitidine",
+            "Famotidine",
+            "Doxycycline",
+            "Clindamycin",
+            "Morphine",
+            "Oxycodone",
+            "Methotrexate",
+            "Warfarin",
+            "Aspirin",
+            "Insulin",
+            "Diltiazem",
+            "Propranolol"
+        ];
+
+
 
 
         //create roles
@@ -233,11 +316,13 @@ class DatabaseSeeder extends Seeder
         Hospital::factory()->count(10)->create();
 
         //create drugs
-        Drug::factory()->count(10)->create();
+        foreach ($drugs as $drug) {
+            Drug::factory()->create(['name' => $drug]);
+        }
 
         //create users
         User::factory()->count(9)->create();
-        User::factory()->create(['name' => 'Admin', 'email' => 'admin@gmail.com', 'role_id' => 1, 'password' => bcrypt('password')]);
+        $admin = User::factory()->create(['name' => 'Admin', 'email' => 'admin@gmail.com', 'role_id' => 1, 'password' => bcrypt('password')]);
 
         //create drug_categories
         foreach ($drug_categories as $category) {
@@ -287,6 +372,24 @@ class DatabaseSeeder extends Seeder
             $dis->categories()->attach($categoryId);
         }
 
+        // Attach 500 diseases to the user (using the same disease ID for simplicity)
+        for ($i = 1; $i < 10; $i++) {
+            $diseaseId = $i; // Replace with the actual disease ID you want to attach
+
+            // Attach the disease
+            $admin->diseases()->attach($diseaseId);
+
+            // Calculate a random created_at timestamp within the last 6 years
+            $createdAt = Carbon::now()->subYears(6)->addDays(rand(0, 365 * 6));
+
+            // Update the pivot table with the new created_at timestamp
+            DB::table('disease_user')
+                ->where('user_id', $admin->id)
+                ->where('disease_id', $diseaseId)
+                ->orderBy('created_at', 'desc') // Ensure we get the latest record if there are duplicates
+                ->limit(1) // Ensure only the latest record is updated
+                ->update(['created_at' => $createdAt, 'updated_at' => $createdAt]);
+        }
 
         //create posts
         Post::factory()->count(5)->create();
