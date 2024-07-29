@@ -18,7 +18,7 @@ class DrugFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'slug' => fake()->slug(2)
+            'slug' => fake()->unique()->slug(2)
         ];
     }
 }
