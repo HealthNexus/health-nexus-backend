@@ -9,6 +9,26 @@ use Illuminate\Validation\Rules;
 
 class AuthController extends Controller
 {
+    // all users
+    public function index()
+    {
+        if (auth()->user()->role->slug === 'admin') {
+            $patients = User::latest()->get();
+            return response([
+                'patients' => $patients
+            ], 200);
+        } else if (auth()->user()->role->slug === 'doctor') {
+            $patients = User::where('hospital_id', auth()->user()->hospital_id)->latest()->get();
+            return response([
+                'patients' => $patients
+            ], 200);
+        } else {
+            return response([
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+    }
+
     // Register
     private $patientRole = 5;
     public function register(Request $request)
