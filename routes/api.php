@@ -4,10 +4,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DiseaseController;
+use App\Http\Controllers\DrugController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\SymptomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +38,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return response(['user' => $request->user()], 200);
     });
 
+    Route::get('/users', [AuthController::class, 'index']);
+
 
     //posts routes
     Route::post('/posts/store', [PostController::class, 'store']);
@@ -55,4 +59,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/month-disease-data', [RecordController::class, 'monthDiseaseData']);
     Route::get('/day-disease-data', [RecordController::class, 'dayDiseaseData']);
     Route::get('/year-disease-data', [RecordController::class, 'yearDiseaseData']);
+    Route::post('/records/{patient}/store', [RecordController::class, 'store']);
+
+    // symptoms
+    Route::get('/symptoms', [SymptomController::class, 'index']);
+
+    //drugs
+    Route::get('/drugs', [DrugController::class, 'index']);
 });
