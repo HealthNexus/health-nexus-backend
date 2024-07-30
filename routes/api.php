@@ -69,4 +69,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //general analytics
     Route::get('/records/analytics/general/{year}/months', [RecordController::class, 'monthsVsDiseasesPerYearSelected']);
+    Route::get('/records/analytics/general/{start}/{end}/years', [RecordController::class, 'yearsVsDiseaseData']);
 });

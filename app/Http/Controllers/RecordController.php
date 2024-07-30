@@ -99,6 +99,77 @@ class RecordController extends Controller
 
         return response()->json(['diseases' => $diseasesCount]);
     }
+
+    public function yearsVsDiseaseData($start, $end)
+    {
+        //make sure the start year is less than the end year
+        if ($start > $end) {
+            return response()->json(['message' => 'The start year must be less than the end year']);
+        }
+        //convert the start and end years to integers
+        $start = (int)$start;
+        $end = (int)$end;
+        $years = collect([]);
+        $data = collect([]);
+
+        $options = [
+            "responsive" => true,
+            "maintainAspectRatio" => false,
+            "plugins" => [
+                "title" => [
+                    "display" => true,
+                    "text" => 'Number of Disease Contraction for The Past 6 Years',
+                    "font" => [
+                        "size" => 18
+                    ]
+                ]
+            ]
+        ];
+
+        // Dynamically populate years with $start and $end years passed to the function
+        for ($i = $start; $i <= $end; $i++) {
+            $years->push($i);
+        }
+
+        //Group the diseases by year
+        $diseasesGroupedByYear = DB::table('disease_user')
+            ->join('diseases', 'disease_user.disease_id', '=', 'diseases.id')
+            ->select('diseases.name', 'disease_user.created_at')
+            ->get()
+            ->groupBy(function ($record) {
+                return Carbon::parse($record->created_at)->year;
+            });
+
+        // Count the number of diseases in each year
+        foreach ($years as $year) {
+            $yearDiseaseCount = $diseasesGroupedByYear->has($year) ? $diseasesGroupedByYear[$year]->count() : 0;
+            $data->push($yearDiseaseCount);
+        }
+
+
+        return response([
+            "data" => [
+                'labels' => $years,
+                'datasets' => [
+                    [
+                        'label' => 'Disease Count',
+                        'borderColor' => "#413d3d81",
+                        'backgroundColor' => [
+                            '#FF6384', // 1
+                            '#36A2EB', // 2
+                            '#FFCE56', // 3
+                            '#4BC0C0', // 4
+                            '#9966FF', // 5
+                            '#FF9F40', // 6
+                        ],
+                        'data' => $data,
+                    ]
+                ]
+            ],
+            "options" => $options
+        ]);
+    }
+
     public function monthsVsDiseasesPerYearSelected($year)
     {
         //steps
