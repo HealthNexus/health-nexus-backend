@@ -29,6 +29,7 @@ class RecordController extends Controller
                 return Carbon::parse($record)->format('F');
             })->mode();
 
+
             return [
                 'id' => $id, // You can use any unique identifier here
                 'disease_id' => $disease->id,
@@ -72,10 +73,10 @@ class RecordController extends Controller
 
             // Attach the symptoms to the disease
             $disease = Disease::find(request('disease_id'));
-            $disease->symptoms()->syncWithoutDetaching(request('symptom_id'));
+            $disease->symptoms()->sync(request('symptom_Ids'));
 
             // Attach the drugs to the disease
-            $disease->drugs()->syncWithoutDetaching(request('drug_id'));
+            $disease->drugs()->sync(request('drug_Ids'));
 
             $record = $patient->diseases()->where('disease_id', request('disease_id'))->first()->record;
 
@@ -118,7 +119,7 @@ class RecordController extends Controller
             "plugins" => [
                 "title" => [
                     "display" => true,
-                    "text" => 'Number of Disease Contraction for The Past 6 Years',
+                    "text" => 'Number of Disease Contraction between Years ' . $start . ' and ' . $end,
                     "font" => [
                         "size" => 18
                     ]
@@ -205,7 +206,7 @@ class RecordController extends Controller
             "plugins" => [
                 "title" => [
                     "display" => true,
-                    "text" => 'Number of Disease Contraction Each Month',
+                    "text" => 'Number of Disease Contraction Each Month in ' . $year,
                     "font" => [
                         "size" => 18
                     ]

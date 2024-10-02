@@ -32,7 +32,7 @@ class PostController extends Controller
 
         $thumbnail = $this->saveImage($request->thumbnail, 'posts');
         $attributes['thumbnail'] = $thumbnail;
-        $post = auth()->user()->posts()->create($attributes);
+        $post = $request->user()->posts()->create($attributes);
 
         return response([
             'post' => $post,
