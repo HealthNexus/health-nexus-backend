@@ -30,7 +30,7 @@ class AuthController extends Controller
     }
 
     // Register
-    private $patientRole = 5;
+    private $patientRole = 2;
     public function register(Request $request)
     {
         $validatedData = $request->validate([
