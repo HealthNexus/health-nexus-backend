@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewDiseasePostCreated;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -34,6 +36,8 @@ class PostController extends Controller
         $attributes['thumbnail'] = $thumbnail;
         $post = $request->user()->posts()->create($attributes);
 
+        // Notify users about the new post
+        event(new NewDiseasePostCreated($post));
         return response([
             'post' => $post,
             'message' => 'Post successfully created'
