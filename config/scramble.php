@@ -107,5 +107,20 @@ return [
         RestrictedDocsAccess::class,
     ],
 
+    /*
+     * Authentication schemes that will be used in OpenAPI specification.
+     */
+    'api' => [
+        'auth' => [
+            'sanctum' => [
+                'type' => 'http',
+                'scheme' => 'bearer',
+                'bearerFormat' => 'token',
+                'description' => 'Laravel Sanctum Bearer Token Authentication',
+            ],
+        ],
+        'default_auth' => 'sanctum',
+    ],
+
     'extensions' => [],
 ];
