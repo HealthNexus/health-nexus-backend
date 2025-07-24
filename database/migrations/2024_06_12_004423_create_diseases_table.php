@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->integer('quantity')->default(0);
+            $table->decimal('unit_price', 8, 2)->default(0.00);
             $table->timestamps();
         });
     }
