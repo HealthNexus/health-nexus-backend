@@ -15,6 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->decimal('price', 10, 2)->default(0);
+            $table->integer('stock')->default(0);
+            $table->text('description')->nullable();
+            $table->date('expiry_date')->nullable();
+            $table->string('image')->nullable();
+            $table->enum('status', ['active', 'inactive', 'out_of_stock'])->default('active');
+
+            // Add indexes for performance
+            $table->index(['status', 'stock']);
+            $table->index(['price']);
+
             $table->timestamps();
         });
     }

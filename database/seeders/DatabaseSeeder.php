@@ -99,46 +99,6 @@ class DatabaseSeeder extends Seeder
             'Antihypertensive',
             'Antihyperlipidemic',
             'Antidiabetic',
-            'Anticoagulants',
-            'Anticonvulsants',
-            'Antidepressants',
-            'Antipsychotics',
-            'Antianxiety',
-            'Antihypertensive',
-            'Antihyperlipidemic',
-            'Antidiabetic',
-            'Anticoagulants',
-            'Anticonvulsants',
-            'Antidepressants',
-            'Antipsychotics',
-            'Antianxiety',
-            'Antihypertensive',
-            'Antihyperlipidemic',
-            'Antidiabetic',
-            'Anticoagulants',
-            'Anticonvulsants',
-            'Antidepressants',
-            'Antipsychotics',
-            'Antianxiety',
-            'Antihypertensive',
-            'Antihyperlipidemic',
-            'Antidiabetic',
-            'Anticoagulants',
-            'Anticonvulsants',
-            'Antidepressants',
-            'Antipsychotics',
-            'Antianxiety',
-            'Antihypertensive',
-            'Antihyperlipidemic',
-            'Antidiabetic',
-            'Anticoagulants',
-            'Anticonvulsants',
-            'Antidepressants',
-            'Antipsychotics',
-            'Antianxiety',
-            'Antihypertensive',
-            'Antihyperlipidemic',
-            'Antidiabetic',
             'Chronic Disease',
             'Infectious Disease',
             'Mental Health',
@@ -332,11 +292,19 @@ class DatabaseSeeder extends Seeder
 
         //create drug_categories
         foreach ($drug_categories as $category) {
-            $dc = DrugCategory::factory()->create(['name' => $category]);
+            // Check if category already exists, create only if it doesn't
+            $dc = DrugCategory::firstOrCreate(
+                ['name' => $category],
+                [
+                    'name' => $category,
+                    'slug' => \Illuminate\Support\Str::slug($category),
+                    'description' => "Category for {$category} medications"
+                ]
+            );
 
             $drug_id = rand(1, 10);
-            //attach drugs to drug category
-            $dc->drugs()->attach($drug_id);
+            //attach drugs to drug category (avoid duplicate attachments)
+            $dc->drugs()->syncWithoutDetaching($drug_id);
         }
 
         //create symptoms
@@ -424,5 +392,8 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+        // Seed delivery areas
+        $this->call(DeliveryAreaSeeder::class);
     }
 }
