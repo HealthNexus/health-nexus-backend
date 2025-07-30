@@ -10,6 +10,7 @@ use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DrugController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RecordController;
@@ -20,6 +21,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// Password Reset Routes
+Route::post('/password/forgot', [PasswordResetController::class, 'sendResetLinkEmail']);
+Route::post('/password/reset', [PasswordResetController::class, 'reset']);
+Route::post('/password/verify-token', [PasswordResetController::class, 'verifyToken']);
+
 Route::get('/posts/{post}', [PostController::class, 'show']);
 
 //retrieve all posts
