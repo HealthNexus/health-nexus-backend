@@ -81,6 +81,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if ($post->user_id !== auth()->id()) {
+            return response(['message' => 'You are not authorized to delete this post'], 403);
+        }
         $post->delete();
         return response([
             'message' => 'post deleted successfully',
