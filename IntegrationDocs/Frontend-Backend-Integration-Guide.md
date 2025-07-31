@@ -1292,7 +1292,7 @@ describe("DrugCard", () => {
         name: "Aspirin",
         slug: "aspirin",
         price: 10.99,
-        formatted_price: "₦10.99",
+        formatted_price: "₵10.99",
         stock: 50,
         is_available: true,
     };
@@ -1306,7 +1306,7 @@ describe("DrugCard", () => {
         render(<DrugCard drug={mockDrug} />);
 
         expect(screen.getByText("Aspirin")).toBeInTheDocument();
-        expect(screen.getByText("₦10.99")).toBeInTheDocument();
+        expect(screen.getByText("₵10.99")).toBeInTheDocument();
     });
 
     test("should add item to cart when button is clicked", () => {

@@ -49,12 +49,12 @@ class DeliveryService
             $baseFee = $area->base_fee;
         }
 
-        // Free delivery for orders above ₵100 (₦10,000 equivalent in Ghana Cedis)
+        // Free delivery for orders above ₵100 (₵10,000 equivalent in Ghana Cedis)
         if ($orderValue >= 100) {
             return 0;
         }
 
-        // 50% discount for orders above ₵50 (₦5,000 equivalent in Ghana Cedis)
+        // 50% discount for orders above ₵50 (₵5,000 equivalent in Ghana Cedis)
         if ($orderValue >= 50) {
             $baseFee *= 0.5;
         }

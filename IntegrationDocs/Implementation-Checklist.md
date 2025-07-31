@@ -555,7 +555,7 @@ const ApiTest: React.FC = () => {
                     <ul>
                         {drugs.map((drug) => (
                             <li key={drug.id}>
-                                {drug.name} - ₦{drug.price}
+                                {drug.name} - ₵{drug.price}
                             </li>
                         ))}
                     </ul>

@@ -272,12 +272,12 @@ class Payment extends Model
 
     public function getFormattedAmountAttribute(): string
     {
-        return '₦' . number_format($this->amount, 2);
+        return '₵' . number_format($this->amount, 2);
     }
 
     public function getFormattedFeesAttribute(): string
     {
-        return $this->fees ? '₦' . number_format($this->fees, 2) : '₦0.00';
+        return $this->fees ? '₵' . number_format($this->fees, 2) : '₵0.00';
     }
 
     // Scopes
@@ -436,7 +436,7 @@ return [
     |
     */
     'currency' => env('PAYMENT_CURRENCY', 'NGN'),
-    'currency_symbol' => env('PAYMENT_CURRENCY_SYMBOL', '₦'),
+    'currency_symbol' => env('PAYMENT_CURRENCY_SYMBOL', '₵'),
 
     /*
     |--------------------------------------------------------------------------
@@ -760,8 +760,8 @@ class PaymentService
             'amount' => $amount,
             'fees' => round($totalFees, 2),
             'total' => round($amount + $totalFees, 2),
-            'formatted_fees' => '₦' . number_format($totalFees, 2),
-            'formatted_total' => '₦' . number_format($amount + $totalFees, 2),
+            'formatted_fees' => '₵' . number_format($totalFees, 2),
+            'formatted_total' => '₵' . number_format($amount + $totalFees, 2),
         ];
     }
 }
@@ -1046,7 +1046,7 @@ PAYSTACK_TEST_MODE=true
 # Payment Configuration
 PAYMENT_DEFAULT_GATEWAY=paystack
 PAYMENT_CURRENCY=NGN
-PAYMENT_CURRENCY_SYMBOL=₦
+PAYMENT_CURRENCY_SYMBOL=₵
 PAYMENT_TIMEOUT=30
 PAYMENT_WEBHOOK_VERIFY_SIGNATURE=true
 

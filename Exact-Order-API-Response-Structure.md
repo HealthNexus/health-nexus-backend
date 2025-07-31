@@ -51,8 +51,8 @@
                     "quantity": 2,
                     "unit_price": 5.5,
                     "total_price": 11.0,
-                    "formatted_unit_price": "₦5.50",
-                    "formatted_total_price": "₦11.00",
+                    "formatted_unit_price": "₵5.50",
+                    "formatted_total_price": "₵11.00",
                     "drug": {
                         "id": 1,
                         "name": "Paracetamol 500mg",
@@ -70,8 +70,8 @@
                     "quantity": 1,
                     "unit_price": 3.25,
                     "total_price": 3.25,
-                    "formatted_unit_price": "₦3.25",
-                    "formatted_total_price": "₦3.25",
+                    "formatted_unit_price": "₵3.25",
+                    "formatted_total_price": "₵3.25",
                     "drug": {
                         "id": 3,
                         "name": "Ibuprofen 400mg",
@@ -86,16 +86,16 @@
                 "tax_amount": 0.0,
                 "total_amount": 15.75,
                 "total_items": 3,
-                "formatted_subtotal": "₦14.25",
-                "formatted_tax_amount": "₦0.00",
-                "formatted_total_amount": "₦15.75"
+                "formatted_subtotal": "₵14.25",
+                "formatted_tax_amount": "₵0.00",
+                "formatted_total_amount": "₵15.75"
             },
             "delivery": {
                 "area": "knust_campus",
                 "address": "Room 123, Unity Hall, KNUST Campus",
                 "landmark": "Near Unity Hall",
                 "fee": 1.5,
-                "formatted_fee": "₦1.50",
+                "formatted_fee": "₵1.50",
                 "notes": "Call when you arrive"
             },
             "phone_number": "+233241234567",
@@ -175,7 +175,7 @@ if (response.ok) {
     const orderNumber = result.data.order.order_number; // "HN-20250726-ABC123"
     const orderId = result.data.order.id; // 1
     const totalAmount = result.data.order.totals.total_amount; // 15.75
-    const formattedTotal = result.data.order.totals.formatted_total_amount; // "₦15.75"
+    const formattedTotal = result.data.order.totals.formatted_total_amount; // "₵15.75"
 
     console.log("Order created:", orderNumber);
 } else {

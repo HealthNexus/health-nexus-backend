@@ -59,7 +59,7 @@ NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=pk_test_your_public_key_here
 NEXT_PUBLIC_APP_NAME="Health Nexus E-Pharmacy"
 NEXT_PUBLIC_APP_VERSION=1.0.0
 NEXT_PUBLIC_CURRENCY=NGN
-NEXT_PUBLIC_CURRENCY_SYMBOL=₦
+NEXT_PUBLIC_CURRENCY_SYMBOL=₵
 ```
 
 ### ✅ 1.4 TypeScript Configuration
@@ -1382,7 +1382,7 @@ export class PaymentService {
         }
 
         // Extract amount as number (remove currency symbol and convert)
-        const amountStr = paymentData.amount.replace(/[₦,]/g, "");
+        const amountStr = paymentData.amount.replace(/[₵,]/g, "");
         const amount = parseFloat(amountStr) * 100; // Convert to kobo
 
         const handler = window.PaystackPop.setup({
@@ -1722,7 +1722,7 @@ const mockDrug = {
     slug: "paracetamol-500mg",
     description: "Pain relief medication",
     price: 250.0,
-    formatted_price: "₦250.00",
+    formatted_price: "₵250.00",
     stock: 50,
     expiry_date: "2025-12-31",
     image: "/test-image.jpg",
@@ -1747,7 +1747,7 @@ describe("DrugCard", () => {
         render(<DrugCard drug={mockDrug} />);
 
         expect(screen.getByText("Paracetamol 500mg")).toBeInTheDocument();
-        expect(screen.getByText("₦250.00")).toBeInTheDocument();
+        expect(screen.getByText("₵250.00")).toBeInTheDocument();
         expect(screen.getByText("Stock: 50")).toBeInTheDocument();
         expect(screen.getByText("Analgesics")).toBeInTheDocument();
     });

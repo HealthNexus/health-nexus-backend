@@ -51,6 +51,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'drugs' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/drugs'),
+            'url' => env('APP_URL') . '/storage/drugs',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',

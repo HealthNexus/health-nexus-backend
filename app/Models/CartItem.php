@@ -60,11 +60,11 @@ class CartItem extends Model
 
     public function getFormattedUnitPriceAttribute(): string
     {
-        return '₦' . number_format($this->unit_price, 2);
+        return '₵' . number_format($this->unit_price, 2);
     }
 
     public function getFormattedTotalPriceAttribute(): string
     {
-        return '₦' . number_format($this->total_price, 2);
+        return '₵' . number_format($this->total_price, 2);
     }
 }

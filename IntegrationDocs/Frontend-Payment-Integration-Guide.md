@@ -356,7 +356,7 @@ function PaymentMethods({ orderId, orderTotal }) {
     return (
         <div className="payment-methods">
             <h3>Payment Options for Order #{orderId}</h3>
-            <p>Total: ₦{orderTotal.toLocaleString()}</p>
+            <p>Total: ₵{orderTotal.toLocaleString()}</p>
 
             <div className="payment-buttons">
                 <button
@@ -388,7 +388,7 @@ export default PaymentMethods;
 <template>
     <div class="payment-methods">
         <h3>Payment Options</h3>
-        <p>Total: ₦{{ orderTotal.toLocaleString() }}</p>
+        <p>Total: ₵{{ orderTotal.toLocaleString() }}</p>
 
         <div class="payment-buttons">
             <button

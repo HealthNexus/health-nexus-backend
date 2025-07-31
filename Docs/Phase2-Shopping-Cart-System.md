@@ -318,12 +318,12 @@ class CartItem extends Model
 
     public function getFormattedUnitPriceAttribute(): string
     {
-        return '₦' . number_format($this->unit_price, 2);
+        return '₵' . number_format($this->unit_price, 2);
     }
 
     public function getFormattedTotalPriceAttribute(): string
     {
-        return '₦' . number_format($this->total_price, 2);
+        return '₵' . number_format($this->total_price, 2);
     }
 }
 ```
@@ -424,9 +424,9 @@ class CartService
             'tax_amount' => $cart->tax_amount,
             'total_amount' => $cart->total_amount,
             'total_items' => $cart->total_items,
-            'formatted_subtotal' => '₦' . number_format($cart->subtotal, 2),
-            'formatted_tax_amount' => '₦' . number_format($cart->tax_amount, 2),
-            'formatted_total_amount' => '₦' . number_format($cart->total_amount, 2),
+            'formatted_subtotal' => '₵' . number_format($cart->subtotal, 2),
+            'formatted_tax_amount' => '₵' . number_format($cart->tax_amount, 2),
+            'formatted_total_amount' => '₵' . number_format($cart->total_amount, 2),
         ];
     }
 
@@ -528,9 +528,9 @@ class CartResource extends JsonResource
                 'tax_amount' => $this->tax_amount,
                 'total_amount' => $this->total_amount,
                 'total_items' => $this->total_items,
-                'formatted_subtotal' => '₦' . number_format($this->subtotal, 2),
-                'formatted_tax_amount' => '₦' . number_format($this->tax_amount, 2),
-                'formatted_total_amount' => '₦' . number_format($this->total_amount, 2),
+                'formatted_subtotal' => '₵' . number_format($this->subtotal, 2),
+                'formatted_tax_amount' => '₵' . number_format($this->tax_amount, 2),
+                'formatted_total_amount' => '₵' . number_format($this->total_amount, 2),
             ],
             'is_empty' => $this->isEmpty(),
             'created_at' => $this->created_at,

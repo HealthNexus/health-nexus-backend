@@ -161,7 +161,7 @@ class OrderService
             'delivering_orders' => $deliveringOrders,
             'delivered_orders' => $deliveredOrders,
             'total_revenue' => $totalRevenue,
-            'formatted_total_revenue' => '₦' . number_format($totalRevenue, 2),
+            'formatted_total_revenue' => '₵' . number_format($totalRevenue, 2),
         ];
     }
 

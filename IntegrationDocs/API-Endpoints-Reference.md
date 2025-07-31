@@ -209,7 +209,7 @@ GET /drugs?category=analgesics&search=paracetamol&sort_by=price&sort_direction=a
             "slug": "paracetamol-500mg",
             "description": "Pain relief and fever reduction",
             "price": 250.0,
-            "formatted_price": "₦250.00",
+            "formatted_price": "₵250.00",
             "stock": 100,
             "expiry_date": "2025-12-31",
             "image": "/storage/drugs/paracetamol.jpg",
@@ -330,9 +330,9 @@ _Can be used by guests (session-based) or authenticated users_
         "subtotal": 750.0,
         "tax_amount": 56.25,
         "total_amount": 806.25,
-        "formatted_subtotal": "₦750.00",
-        "formatted_tax_amount": "₦56.25",
-        "formatted_total_amount": "₦806.25",
+        "formatted_subtotal": "₵750.00",
+        "formatted_tax_amount": "₵56.25",
+        "formatted_total_amount": "₵806.25",
         "items": [
             {
                 "id": 1,
@@ -475,9 +475,9 @@ GET /cart/totals
         "tax_amount": 56.25,
         "tax_rate": 7.5,
         "total_amount": 806.25,
-        "formatted_subtotal": "₦750.00",
-        "formatted_tax_amount": "₦56.25",
-        "formatted_total_amount": "₦806.25",
+        "formatted_subtotal": "₵750.00",
+        "formatted_tax_amount": "₵56.25",
+        "formatted_total_amount": "₵806.25",
         "items_count": 3
     }
 }
@@ -678,9 +678,9 @@ _Requires authentication_
         "delivering_orders": 7,
         "delivered_orders": 3,
         "total_spent": 12500.0,
-        "formatted_total_spent": "₦12,500.00",
+        "formatted_total_spent": "₵12,500.00",
         "average_order_value": 833.33,
-        "formatted_average_order_value": "₦833.33"
+        "formatted_average_order_value": "₵833.33"
     }
 }
 ```
@@ -713,7 +713,7 @@ _Requires authentication_
         "payment_reference": "PAY_20240724_001",
         "authorization_url": "https://checkout.paystack.com/xyz123",
         "access_code": "xyz123abc",
-        "amount": "₦806.25"
+        "amount": "₵806.25"
     }
 }
 ```
@@ -743,9 +743,9 @@ _Requires authentication_
         "amount": 1000.0,
         "fee": 15.0,
         "total": 1015.0,
-        "formatted_amount": "₦1,000.00",
-        "formatted_fee": "₦15.00",
-        "formatted_total": "₦1,015.00"
+        "formatted_amount": "₵1,000.00",
+        "formatted_fee": "₵15.00",
+        "formatted_total": "₵1,015.00"
     }
 }
 ```
@@ -823,7 +823,7 @@ _Requires admin authentication_
         "out_of_stock_drugs": 15,
         "low_stock_drugs": 12,
         "total_stock_value": 125000.0,
-        "formatted_stock_value": "₦125,000.00",
+        "formatted_stock_value": "₵125,000.00",
         "top_selling_drugs": [
             {
                 "drug_id": 1,

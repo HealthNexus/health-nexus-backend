@@ -99,7 +99,7 @@ class InventoryController extends Controller
                 'out_of_stock_drugs' => $outOfStockDrugs,
                 'low_stock_drugs' => $lowStockDrugs,
                 'total_stock_value' => $totalStockValue,
-                'formatted_stock_value' => '₦' . number_format($totalStockValue, 2),
+                'formatted_stock_value' => '₵' . number_format($totalStockValue, 2),
                 'top_selling_drugs' => $topSellingDrugs,
             ]
         ], 200);

@@ -41,12 +41,18 @@ Route::get('/diseases', [DiseaseController::class, 'index']);
 //retrievee all disease categories
 Route::get('/diseases/categories', [CategoryController::class, 'index']);
 
+
 // Public drug routes (e-pharmacy)
 Route::get('/drugs', [DrugController::class, 'index']);
 Route::get('/drugs/search', [DrugController::class, 'search']);
 Route::get('/drugs/categories', [DrugController::class, 'categories']);
 Route::get('/drugs/category/{categorySlug}', [DrugController::class, 'byCategory']);
 Route::get('/drugs/{slug}', [DrugController::class, 'show']);
+
+// Drug creation (protected)
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/drugs', [DrugController::class, 'store']);
+});
 
 // Public delivery information routes
 Route::prefix('delivery')->group(function () {
@@ -113,6 +119,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //admin drugs
     Route::get('/admin/drugs', [DrugController::class, 'adminIndex']);
+    Route::delete('/admin/drugs/{drug}', [DrugController::class, 'destroy']);
 
     // Admin inventory management routes
     Route::middleware(['admin'])->prefix('admin/inventory')->group(function () {

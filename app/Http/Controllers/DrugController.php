@@ -9,46 +9,57 @@ use App\Models\DrugCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Http\Requests\StoreDrugRequest;
+use Illuminate\Support\Str;
 
 class DrugController extends Controller
 {
+
+    /**
+     * Store a newly created drug in storage.
+     */
+    public function store(StoreDrugRequest $request)
+    {
+        $data = $request->validated();
+
+        // Handle image upload if present using saveImage infrastructure
+        if ($request->hasFile('image')) {
+            $imagePath = $this->saveImage($request->image, 'drugs');
+            logger()->info('Image uploaded successfully', ['path' => $imagePath]);
+            $data['image'] = $imagePath;
+        }
+
+        // Generate slug if not provided
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        $categoryIds = $data['category_ids'] ?? [];
+        $diseaseIds = $data['disease_ids'] ?? [];
+        // Remove category_ids from data to avoid mass assignment issues
+        unset($data['disease_ids']);
+        unset($data['category_ids']);
+        $drug = Drug::create($data);
+
+        // Attach categories
+        if (!empty($categoryIds)) {
+            $drug->categories()->sync($categoryIds);
+        }
+
+        // Attach diseases if provided
+        if (!empty($diseaseIds)) {
+            $drug->diseases()->sync($diseaseIds);
+        }
+
+        return new DrugResource($drug->load(['categories', 'diseases']));
+    }
     /**
      * Display a listing of drugs for public access
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $query = Drug::with(['categories', 'diseases'])
-            ->available();
-
-        // Apply filters
-        if ($request->filled('category')) {
-            $query->whereHas('categories', function ($q) use ($request) {
-                $q->where('slug', $request->category);
-            });
-        }
-
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
-            });
-        }
-
-        if ($request->filled('min_price') && $request->filled('max_price')) {
-            $query->whereBetween('price', [$request->min_price, $request->max_price]);
-        }
-
-        // Sorting
-        $sortBy = $request->get('sort_by', 'name');
-        $sortDirection = $request->get('sort_direction', 'asc');
-
-        $allowedSorts = ['name', 'price', 'created_at', 'stock'];
-        if (in_array($sortBy, $allowedSorts)) {
-            $query->orderBy($sortBy, $sortDirection);
-        }
-
-        $drugs = $query->paginate($request->get('per_page', 15));
+        $drugs = Drug::with(['categories', 'diseases'])
+            ->orderByDesc('created_at')->get();
 
         return DrugResource::collection($drugs);
     }

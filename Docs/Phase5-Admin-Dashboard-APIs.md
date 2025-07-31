@@ -174,7 +174,7 @@ class InventoryController extends Controller
                 'out_of_stock_drugs' => $outOfStockDrugs,
                 'low_stock_drugs' => $lowStockDrugs,
                 'total_stock_value' => $totalStockValue,
-                'formatted_stock_value' => '₦' . number_format($totalStockValue, 2),
+                'formatted_stock_value' => '₵' . number_format($totalStockValue, 2),
                 'top_selling_drugs' => $topSellingDrugs,
             ]
         ], 200);
@@ -657,7 +657,7 @@ class AnalyticsService
 
         return [
             'total_revenue' => $totalRevenue,
-            'formatted_total_revenue' => '₦' . number_format($totalRevenue, 2),
+            'formatted_total_revenue' => '₵' . number_format($totalRevenue, 2),
             'total_orders' => $totalOrders,
             'total_customers' => $totalCustomers,
             'total_products' => $totalProducts,
@@ -685,12 +685,12 @@ class AnalyticsService
         return [
             'today' => [
                 'amount' => $todayRevenue,
-                'formatted' => '₦' . number_format($todayRevenue, 2),
+                'formatted' => '₵' . number_format($todayRevenue, 2),
                 'change_from_yesterday' => $this->calculatePercentageChange($todayRevenue, $yesterdayRevenue),
             ],
             'this_month' => [
                 'amount' => $thisMonthRevenue,
-                'formatted' => '₦' . number_format($thisMonthRevenue, 2),
+                'formatted' => '₵' . number_format($thisMonthRevenue, 2),
                 'change_from_last_month' => $this->calculatePercentageChange($thisMonthRevenue, $lastMonthRevenue),
             ],
             'last_30_days' => $this->getRevenueLast30Days(),
@@ -742,7 +742,7 @@ class AnalyticsService
             'out_of_stock' => $outOfStock,
             'low_stock' => $lowStock,
             'total_stock_value' => $totalStockValue,
-            'formatted_stock_value' => '₦' . number_format($totalStockValue, 2),
+            'formatted_stock_value' => '₵' . number_format($totalStockValue, 2),
         ];
     }
 
@@ -793,7 +793,7 @@ class AnalyticsService
                     'drug_name' => $item->drug_name,
                     'total_sold' => $item->total_sold,
                     'total_revenue' => $item->total_revenue,
-                    'formatted_revenue' => '₦' . number_format($item->total_revenue, 2),
+                    'formatted_revenue' => '₵' . number_format($item->total_revenue, 2),
                 ];
             })
             ->toArray();
@@ -831,7 +831,7 @@ class AnalyticsService
             $data[] = [
                 'date' => $date,
                 'revenue' => $revenue,
-                'formatted_revenue' => '₦' . number_format($revenue, 2),
+                'formatted_revenue' => '₵' . number_format($revenue, 2),
             ];
         }
 
@@ -893,10 +893,10 @@ class AnalyticsService
             ],
             'summary' => [
                 'total_revenue' => $totalRevenue,
-                'formatted_total_revenue' => '₦' . number_format($totalRevenue, 2),
+                'formatted_total_revenue' => '₵' . number_format($totalRevenue, 2),
                 'total_orders' => $totalOrders,
                 'average_order_value' => $averageOrderValue,
-                'formatted_average_order_value' => '₦' . number_format($averageOrderValue, 2),
+                'formatted_average_order_value' => '₵' . number_format($averageOrderValue, 2),
             ],
             'product_sales' => $productSales,
             'daily_breakdown' => $this->getDailyBreakdown($startDate, $endDate),
@@ -921,7 +921,7 @@ class AnalyticsService
                 'date' => $currentDate->format('Y-m-d'),
                 'revenue' => $dayRevenue,
                 'orders' => $dayOrders,
-                'formatted_revenue' => '₦' . number_format($dayRevenue, 2),
+                'formatted_revenue' => '₵' . number_format($dayRevenue, 2),
             ];
 
             $currentDate->addDay();
@@ -1064,7 +1064,7 @@ class AnalyticsController extends Controller
                     'total_sold' => $item->total_sold,
                     'total_revenue' => $item->total_revenue,
                     'total_orders' => $item->total_orders,
-                    'formatted_revenue' => '₦' . number_format($item->total_revenue, 2),
+                    'formatted_revenue' => '₵' . number_format($item->total_revenue, 2),
                     'average_order_quantity' => round($item->total_sold / $item->total_orders, 2),
                 ];
             });
@@ -1131,7 +1131,7 @@ class AnalyticsController extends Controller
                     'name' => $customer->name,
                     'email' => $customer->email,
                     'total_spent' => $customer->total_spent ?? 0,
-                    'formatted_total_spent' => '₦' . number_format($customer->total_spent ?? 0, 2),
+                    'formatted_total_spent' => '₵' . number_format($customer->total_spent ?? 0, 2),
                     'total_orders' => $customer->total_orders ?? 0,
                     'average_order_value' => $customer->total_orders > 0
                         ? round(($customer->total_spent ?? 0) / $customer->total_orders, 2)

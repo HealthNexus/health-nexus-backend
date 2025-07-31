@@ -138,7 +138,7 @@ MAIL_PASSWORD=your_password
 -   [ ] Drug search functionality
 -   [ ] Category filtering
 -   [ ] Single drug detail page
--   [ ] Price formatting (₦)
+-   [ ] Price formatting (₵)
 
 ### Phase 3: Shopping Cart (Week 3)
 

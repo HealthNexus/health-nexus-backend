@@ -70,7 +70,7 @@ class DeliveryController extends Controller
             'data' => [
                 'delivery_fee' => $deliveryFee,
                 'estimated_delivery_time' => $estimatedTime,
-                'formatted_fee' => '₦' . number_format($deliveryFee, 2),
+                'formatted_fee' => '₵' . number_format($deliveryFee, 2),
                 'free_delivery_threshold' => 10000,
                 'discount_threshold' => 5000,
                 'is_free_delivery' => $deliveryFee == 0,

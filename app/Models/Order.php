@@ -204,4 +204,16 @@ class Order extends Model
     {
         return $this->total_amount + $this->delivery_fee;
     }
+
+    /**
+     * Scope a query to only include orders placed within the last X days.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  int  $days
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRecent($query, $days = 7)
+    {
+        return $query->where('placed_at', '>=', now()->subDays($days));
+    }
 }

@@ -41,18 +41,18 @@
 ### 2. **Simple Delivery Areas**
 
 ```php
-'central'   => ₦200 base fee
-'north'     => ₦300 base fee
-'south'     => ₦300 base fee
-'east'      => ₦400 base fee
-'west'      => ₦350 base fee
-'outskirts' => ₦500 base fee
+'central'   => ₵200 base fee
+'north'     => ₵300 base fee
+'south'     => ₵300 base fee
+'east'      => ₵400 base fee
+'west'      => ₵350 base fee
+'outskirts' => ₵500 base fee
 ```
 
 ### 3. **Simple Fee Structure**
 
--   **Free delivery**: Orders ≥ ₦10,000
--   **50% discount**: Orders ≥ ₦5,000
+-   **Free delivery**: Orders ≥ ₵10,000
+-   **50% discount**: Orders ≥ ₵5,000
 -   **Standard delivery**: 1-2 business days for all orders
 
 ## 🎯 Frontend Integration (Simplified)

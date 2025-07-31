@@ -52,7 +52,7 @@ class OrderResource extends JsonResource
             'can_be_delivered' => $this->canBeDelivered(),
             'can_be_shipped' => $this->canBeShipped(),
             'is_delivered' => $this->isDelivered(),
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at,
         ];
     }
