@@ -185,4 +185,18 @@ class DrugController extends Controller
 
         return DrugResource::collection($drugs);
     }
+
+
+    /**
+     * Remove the specified drug from storage (admin only).
+     */
+    public function destroy(Drug $drug)
+    {
+        $user = auth()->user();
+        if (!$user || !in_array($user->role->slug, ['admin', 'doctor'])) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+        $drug->delete();
+        return response()->json(['message' => 'Drug deleted successfully'], 204);
+    }
 }
