@@ -60,6 +60,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Disease::class, 'disease_user', 'user_id', 'disease_id')->as('record')->withTimestamps()->withPivot('id');
     }
 
+
     //relationship between user and comment
     public function comments(): HasMany
     {

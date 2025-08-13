@@ -47,4 +47,4 @@ class DiseaseController extends Controller
     {
         //
     }
-}
+}   

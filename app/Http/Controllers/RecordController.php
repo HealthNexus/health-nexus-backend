@@ -70,15 +70,46 @@ class RecordController extends Controller
 
             $patient->diseases()->attach(request('disease_id'));
 
+            // Get the per-record pivot id from disease_user
+            $recordRelation = $patient->diseases()->where('disease_id', request('disease_id'))->first();
+            $pivotId = $recordRelation?->record?->id; // 'record' alias from as('record') withPivot('id')
 
-            // Attach the symptoms to the disease
-            $disease = Disease::find(request('disease_id'));
-            $disease->symptoms()->sync(request('symptom_Ids'));
+            // Safety: ensure pivot exists
+            if (!$pivotId) {
+                return response()->json(['message' => 'Unable to create patient record link'], 500);
+            }
 
-            // Attach the drugs to the disease
-            $disease->drugs()->sync(request('drug_Ids'));
+            // Sync per-record symptoms into disease_user_symptom
+            $symptomIds = (array) request('symptom_Ids', []);
+            DB::table('disease_user_symptom')->where('disease_user_id', $pivotId)->delete();
+            if (!empty($symptomIds)) {
+                $symptomRows = collect($symptomIds)
+                    ->unique()
+                    ->map(fn ($sid) => [
+                        'disease_user_id' => $pivotId,
+                        'symptom_id' => $sid,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ])->values()->all();
+                DB::table('disease_user_symptom')->insert($symptomRows);
+            }
 
-            $record = $patient->diseases()->where('disease_id', request('disease_id'))->first()->record;
+            // Sync per-record drugs into disease_user_drug
+            $drugIds = (array) request('drug_Ids', []);
+            DB::table('disease_user_drug')->where('disease_user_id', $pivotId)->delete();
+            if (!empty($drugIds)) {
+                $drugRows = collect($drugIds)
+                    ->unique()
+                    ->map(fn ($did) => [
+                        'disease_user_id' => $pivotId,
+                        'drug_id' => $did,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ])->values()->all();
+                DB::table('disease_user_drug')->insert($drugRows);
+            }
+
+            $record = $recordRelation->record;
 
 
             return response()->json(['message' => 'Record added successfully', 'record' => $record]);
