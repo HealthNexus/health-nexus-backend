@@ -8,6 +8,7 @@ use App\Http\Resources\OrderResource;
 use App\Http\Services\OrderService;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 

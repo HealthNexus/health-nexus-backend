@@ -137,6 +137,7 @@ class Order extends Model
             OrderStatus::PLACED => 'blue',
             OrderStatus::DELIVERING => 'orange',
             OrderStatus::DELIVERED => 'green',
+            OrderStatus::CANCELLED => 'red',
         };
     }
 
@@ -164,6 +165,11 @@ class Order extends Model
     public function scopeDelivered($query)
     {
         return $query->where('status', OrderStatus::DELIVERED);
+    }
+
+    public function scopeCancelled($query)
+    {
+        return $query->where('status', OrderStatus::CANCELLED);
     }
 
     // Delivery-specific methods for in-city delivery

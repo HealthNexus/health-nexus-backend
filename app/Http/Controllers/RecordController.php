@@ -85,7 +85,7 @@ class RecordController extends Controller
             if (!empty($symptomIds)) {
                 $symptomRows = collect($symptomIds)
                     ->unique()
-                    ->map(fn ($sid) => [
+                    ->map(fn($sid) => [
                         'disease_user_id' => $pivotId,
                         'symptom_id' => $sid,
                         'created_at' => now(),
@@ -100,7 +100,7 @@ class RecordController extends Controller
             if (!empty($drugIds)) {
                 $drugRows = collect($drugIds)
                     ->unique()
-                    ->map(fn ($did) => [
+                    ->map(fn($did) => [
                         'disease_user_id' => $pivotId,
                         'drug_id' => $did,
                         'created_at' => now(),
